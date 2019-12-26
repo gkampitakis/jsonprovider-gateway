@@ -1,12 +1,11 @@
 import React from 'react';
 import './App.css';
+import Header from './components/Header/Header';
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        Json Provider Coming Soon
-      </header>
+      <Header />
     </div>
   );
 }
