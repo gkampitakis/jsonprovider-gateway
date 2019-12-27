@@ -46,5 +46,3 @@ class Application extends Component<ApplicationProps> {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Application);
-
-//FIXME: the const render  = ()=> {} 

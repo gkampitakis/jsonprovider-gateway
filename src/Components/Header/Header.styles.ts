@@ -56,11 +56,8 @@ const styles = (theme: Theme) =>
         display: 'flex'
       }
     },
-    sectionMobile: {
-      display: 'flex',
-      [theme.breakpoints.up('md')]: {
-        display: 'none'
-      }
+    newButton: {
+      margin: theme.spacing(1)
     }
   });
 

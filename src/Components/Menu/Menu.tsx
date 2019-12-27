@@ -40,6 +40,7 @@ class Menu extends Component<WithStyles<typeof styles> & MenuProps>{
           className={classes.drawer}
           variant="persistent"
           anchor="left"
+          color="primary"
           open={view.menu.open}
           classes={{
             paper: classes.drawerPaper,
