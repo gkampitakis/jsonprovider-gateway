@@ -15,14 +15,33 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { WithStyles, withStyles } from "@material-ui/core/styles";
 import styles from "./Header.styles";
+import { State } from "../../Store/Reducers";
+import { toggleMenu } from "../../Store/Actions/View/viewAction";
+import { connect } from "react-redux";
+import { ViewState } from "../../Store/Reducers/View/viewReducer";
 
-//TODO: props interface 
-//TODO: redux
 //TODO: styles
-//TODO: darkmode provider
-//TODO: responsive
+//TODO: remove menu from here
+//TODO: customize to project's needs
 
-class Header extends Component<WithStyles<typeof styles>> {
+interface HeaderProps {
+  view: ViewState;
+  toggleMenu: (param: boolean) => void;
+}
+
+const mapStateToProps = (state: State) => {
+  return {
+    view: state.view
+  };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    toggleMenu: (param: boolean) => dispatch(toggleMenu(param))
+  };
+}
+
+class Header extends Component<WithStyles<typeof styles> & HeaderProps> {
 
   private menuId: string = 'primary-search-account-menu';
   private mobileMenuId: string = 'primary-search-account-menu-mobile';
@@ -76,7 +95,7 @@ class Header extends Component<WithStyles<typeof styles>> {
   }
 
   private renderMobileMenu = () => {
-    return (
+    return (//FIXME: this are going to be changed this is different from menu
       <Menu
         anchorEl={this.state.mobileMoreAnchorEl}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -118,7 +137,7 @@ class Header extends Component<WithStyles<typeof styles>> {
   }
 
   public render = () => {
-    const { classes } = this.props;
+    const { classes, view } = this.props;
 
     return (
       <div className={classes.grow}>
@@ -129,6 +148,7 @@ class Header extends Component<WithStyles<typeof styles>> {
               className={classes.menuButton}
               color="inherit"
               aria-label="open drawer"
+              onClick={() => this.props.toggleMenu(!view.menu.open)}
             >
               <MenuIcon />
             </IconButton>
@@ -191,4 +211,4 @@ class Header extends Component<WithStyles<typeof styles>> {
   }
 }
 
-export default withStyles(styles)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Header));

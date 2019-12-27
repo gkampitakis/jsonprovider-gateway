@@ -22,3 +22,6 @@ export const store = createStore(
 );
 
 sagaMiddleware.run(rootSaga);
+
+// TODO: handle Login
+// TODO: spike on how to load data from local storage or on init

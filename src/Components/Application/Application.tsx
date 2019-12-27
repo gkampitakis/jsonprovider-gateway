@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Header from '../../components/Header/Header';
+import Header from '../Header/Header';
 import { ThemeProvider } from '@material-ui/core/styles';
-import { darkTheme } from '../../themes/darkTheme';
-import { lightTheme } from '../../themes/lightTheme';
-import { enableDarkMode, enableLightMode } from "../../store/Actions/Theme/themeAction";
-import { State } from "../../store/Reducers";
+import { darkTheme } from '../../Themes/darkTheme';
+import { lightTheme } from '../../Themes/lightTheme';
+import { enableDarkMode, enableLightMode } from "../../Store/Actions/Theme/themeAction";
+import { State } from "../../Store/Reducers";
+import Menu from "../Menu/Menu";
 
 
 const theme = {
@@ -36,6 +37,7 @@ class Application extends Component<ApplicationProps> {
     return (
       <ThemeProvider theme={theme[this.props.selectedTheme]}>
         <Header />
+        <Menu />
         <button onClick={this.props.enableLightMode}>lightTheme</button>
         <button onClick={this.props.enableDarkMode}>darkTheme</button>
       </ThemeProvider>
@@ -44,3 +46,5 @@ class Application extends Component<ApplicationProps> {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Application);
+
+//FIXME: the const render  = ()=> {} 

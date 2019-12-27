@@ -1,33 +1,33 @@
 import { Theme, fade, createStyles } from "@material-ui/core";
-
+//TODO: clear here unused things and move them to theme
 const styles = (theme: Theme) =>
   createStyles({
     grow: {
-      flexGrow: 1,
+      flexGrow: 1
     },
     menuButton: {
-      marginRight: theme.spacing(2),
+      marginRight: theme.spacing(2)
     },
     title: {
       display: 'none',
       [theme.breakpoints.up('sm')]: {
-        display: 'block',
-      },
+        display: 'block'
+      }
     },
     search: {
       position: 'relative',
       borderRadius: theme.shape.borderRadius,
       backgroundColor: fade(theme.palette.common.white, 0.15),
       '&:hover': {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
+        backgroundColor: fade(theme.palette.common.white, 0.25)
       },
       marginRight: theme.spacing(2),
-      marginLeft:'15%',
+      marginLeft: '15%',
       width: '50%',
       [theme.breakpoints.up('sm')]: {
-        marginLeft:'15%',
-        width: '50%',
-      },
+        marginLeft: '15%',
+        width: '50%'
+      }
     },
     searchIcon: {
       width: theme.spacing(7),
@@ -36,7 +36,7 @@ const styles = (theme: Theme) =>
       pointerEvents: 'none',
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'center'
     },
     inputRoot: {
       color: 'inherit',
@@ -47,21 +47,21 @@ const styles = (theme: Theme) =>
       transition: theme.transitions.create('width'),
       width: '100%',
       [theme.breakpoints.up('md')]: {
-        width: '100%',
-      },
+        width: '100%'
+      }
     },
     sectionDesktop: {
       display: 'none',
       [theme.breakpoints.up('md')]: {
-        display: 'flex',
-      },
+        display: 'flex'
+      }
     },
     sectionMobile: {
       display: 'flex',
       [theme.breakpoints.up('md')]: {
-        display: 'none',
-      },
-    },
+        display: 'none'
+      }
+    }
   });
 
 export default styles;

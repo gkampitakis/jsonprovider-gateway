@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
-import { store } from "./store";
+import { store } from "./Store";
 import { Provider } from "react-redux";
-import Application from "./components/Application/Application";
+import Application from "./Components/Application/Application";
 
 const App: React.FC = () => {
   return (
