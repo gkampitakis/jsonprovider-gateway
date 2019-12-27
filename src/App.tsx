@@ -1,18 +1,16 @@
 import React from 'react';
 import './App.css';
-import Header from './components/Header/Header';
-import { ThemeProvider } from '@material-ui/core/styles';
-import { darkTheme } from './themes/darkTheme';
-import { lightTheme } from './themes/lightTheme';
+import { store } from "./store";
+import { Provider } from "react-redux";
+import Application from "./components/Application/Application";
 
 const App: React.FC = () => {
   return (
-    <ThemeProvider theme={lightTheme}>
+    <Provider store={store}>
       <div className="App">
-        <Header />
+        <Application />
       </div>
-    </ThemeProvider>
-
+    </Provider>
   );
 }
 
