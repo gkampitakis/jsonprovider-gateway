@@ -4,7 +4,7 @@ import Header from '../Header/Header';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { darkTheme } from '../../Themes/darkTheme';
 import { lightTheme } from '../../Themes/lightTheme';
-import { enableDarkMode, enableLightMode } from "../../Store/Actions/Theme/themeAction";
+import { enableDarkMode, enableLightMode } from "../../Store/Actions/View/viewAction";
 import { State } from "../../Store/Reducers";
 import Menu from "../Menu/Menu";
 
@@ -21,7 +21,7 @@ interface ApplicationProps {
 }
 
 const mapStateToProps = (state: State) => {
-  return { selectedTheme: state.theme.selectedTheme }
+  return { selectedTheme: state.view.selectedTheme }
 };
 
 const mapDispatchToProps = (dispatch: any) => {

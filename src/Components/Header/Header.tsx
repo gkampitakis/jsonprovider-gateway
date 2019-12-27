@@ -136,7 +136,7 @@ class Header extends Component<WithStyles<typeof styles> & HeaderProps> {
     )
   }
 
-  public render = () => {
+  public render() {
     const { classes, view } = this.props;
 
     return (
