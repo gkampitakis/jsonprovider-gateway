@@ -13,11 +13,9 @@ import { State } from "../../Store/Reducers";
 import { toggleMenu } from "../../Store/Actions/View/viewAction";
 import { connect } from "react-redux";
 import { ViewState } from "../../Store/Reducers/View/viewReducer";
-import { Button, Icon } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 
-//TODO: styles
-//TODO: remove menu from here
-//TODO: customize to project's needs
+//TODO: add different view when not logged in
 
 interface HeaderProps {
   view: ViewState;

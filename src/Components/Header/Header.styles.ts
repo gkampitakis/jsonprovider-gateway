@@ -1,5 +1,5 @@
 import { Theme, fade, createStyles } from "@material-ui/core";
-//TODO: clear here unused things and move them to theme
+
 const styles = (theme: Theme) =>
   createStyles({
     grow: {

@@ -1,7 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
-//TODO: expand it
-
 export const lightTheme = createMuiTheme({
   palette: {
     primary: {
@@ -19,5 +17,6 @@ export const lightTheme = createMuiTheme({
         borderRadius: '4px'
       }
     }
-  }
+  },
+  transitions: { create: () => '100ms linear' }
 });
