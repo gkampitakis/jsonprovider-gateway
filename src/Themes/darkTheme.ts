@@ -34,6 +34,11 @@ export const darkTheme = createMuiTheme({
       root: {
         color: '#FFFFFF'
       }
+    },
+    MuiLink: {
+      root: {
+        color: 'inherit'
+      }
     }
   },
   transitions: { create: () => '100ms linear' }

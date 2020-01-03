@@ -63,7 +63,7 @@ class Menu extends Component<WithStyles<typeof styles> & MenuProps>{
             </ListItem>
           </List>
           <Divider />
-          <div className={classes.footer}>
+          <div className={classes.menuFooter}>
             <Link href="">Bugs</Link>
             {/* FIXME: this needs for themes */}
             <Link href="">Feedback</Link>

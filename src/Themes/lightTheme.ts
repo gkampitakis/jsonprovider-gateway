@@ -16,6 +16,11 @@ export const lightTheme = createMuiTheme({
         border: '1px solid #D9D9D9',
         borderRadius: '4px'
       }
+    },
+    MuiLink: {
+      root: {
+        color: 'inherit'
+      }
     }
   },
   transitions: { create: () => '100ms linear' }

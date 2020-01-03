@@ -21,8 +21,11 @@ const styles = (theme: Theme) =>
       ...theme.mixins.toolbar,
       justifyContent: 'flex-end'
     },
-    footer: {
-      marginTop: 'auto'
+    menuFooter: {
+      marginTop: 'auto',
+      display: 'flex',
+      justifyContent: 'space-around',
+      paddingBottom: '10px'
     }
   });
 

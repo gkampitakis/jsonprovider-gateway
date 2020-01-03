@@ -7,12 +7,18 @@ import { lightTheme } from '../../Themes/lightTheme';
 import { enableDarkMode, enableLightMode } from "../../Store/Actions/View/viewAction";
 import { State } from "../../Store/Reducers";
 import Menu from "../Menu/Menu";
-
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import { AuthRoute } from "../Utils/AuthRoute";
 
 const theme = {
   darkTheme,
   lightTheme
-}
+};
 
 interface ApplicationProps {
   selectedTheme: 'darkTheme' | 'lightTheme';
@@ -31,6 +37,14 @@ const mapDispatchToProps = (dispatch: any) => {
   }
 };
 
+const Dashboard: React.FC = () => {
+  return <h1>DashBoardPage</h1>
+};//TEMP
+
+export const Login: React.FC = () => {
+  return <h1>LoginPage</h1>
+};//TEMP
+
 class Application extends Component<ApplicationProps> {
 
   public render() {
@@ -38,6 +52,13 @@ class Application extends Component<ApplicationProps> {
       <ThemeProvider theme={theme[this.props.selectedTheme]}>
         <Header />
         <Menu />
+        <Router>
+          <Switch>
+            <AuthRoute path="/dashboard" authorized={true} exact component={Dashboard}></AuthRoute>
+            <Route path="/login" exact component={Login}></Route>
+            <AuthRoute path="/" authorized={true} component={Dashboard}></AuthRoute>
+          </Switch>
+        </Router>
         <button onClick={this.props.enableLightMode}>lightTheme</button>
         <button onClick={this.props.enableDarkMode}>darkTheme</button>
       </ThemeProvider>
