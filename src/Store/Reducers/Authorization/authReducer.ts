@@ -8,7 +8,7 @@ export interface AuthState {
 }
 
 const defaultState: AuthState = {
-  authorized: false,
+  authorized: true,
   userId: '',
   token: ''
 };
