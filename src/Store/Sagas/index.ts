@@ -1,9 +1,9 @@
 import { all } from 'redux-saga/effects';
-import { loginAsync } from "./Authorization/authSaga";
+import { loginAsyncSaga } from "./Authorization/authSaga";
 
 function* rootSaga() {
   yield all([
-    loginAsync()
+    loginAsyncSaga()
   ]);
 }
 

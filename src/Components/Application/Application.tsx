@@ -10,10 +10,13 @@ import Menu from "../Menu/Menu";
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import { AuthRoute } from "../Utils/AuthRoute";
+import Dashboard from "../Dashboard/Dashboard";
+import Login from "../Login/Login";
+import { CssBaseline } from "@material-ui/core";
+import { logout, loginAsync } from "../../Store/Actions/Authorization/authAction";
 
 const theme = {
   darkTheme,
@@ -22,45 +25,51 @@ const theme = {
 
 interface ApplicationProps {
   selectedTheme: 'darkTheme' | 'lightTheme';
+  logged: boolean;
   enableLightMode: () => void;
   enableDarkMode: () => void;
+  login: (username: string, password: string) => void;
+  logout: () => void;
 }
 
 const mapStateToProps = (state: State) => {
-  return { selectedTheme: state.view.selectedTheme }
+  return {
+    selectedTheme: state.view.selectedTheme,
+    logged: state.authorization.authorized
+  }
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
     enableLightMode: () => dispatch(enableLightMode()),
-    enableDarkMode: () => dispatch(enableDarkMode())
+    enableDarkMode: () => dispatch(enableDarkMode()),
+    login: (username: string, password: string) => dispatch(loginAsync(username, password)),
+    logout: () => dispatch(logout())
   }
 };
-
-const Dashboard: React.FC = () => {
-  return <h1>DashBoardPage</h1>
-};//TEMP
-
-export const Login: React.FC = () => {
-  return <h1>LoginPage</h1>
-};//TEMP
 
 class Application extends Component<ApplicationProps> {
 
   public render() {
+    const { selectedTheme, logged } = this.props;
+
     return (
-      <ThemeProvider theme={theme[this.props.selectedTheme]}>
+      <ThemeProvider theme={theme[selectedTheme]}>
+        <CssBaseline />
         <Header />
         <Menu />
         <Router>
           <Switch>
-            <AuthRoute path="/dashboard" authorized={true} exact component={Dashboard}></AuthRoute>
             <Route path="/login" exact component={Login}></Route>
-            <AuthRoute path="/" authorized={true} component={Dashboard}></AuthRoute>
+            <AuthRoute path="/dashboard" authorized={logged} exact component={Dashboard}></AuthRoute>
+            <AuthRoute path="/" exact authorized={logged} component={Dashboard}></AuthRoute>
           </Switch>
         </Router>
-        <button onClick={this.props.enableLightMode}>lightTheme</button>
+        {/* TODO: uncomment for functionality */}
+        {/* <button onClick={this.props.enableLightMode}>lightTheme</button>
         <button onClick={this.props.enableDarkMode}>darkTheme</button>
+        <button onClick={() => this.props.login('test', '12345')}>login</button>
+        <button onClick={this.props.logout}>logout</button> */}
       </ThemeProvider>
     )
   }

@@ -58,6 +58,9 @@ const styles = (theme: Theme) =>
     },
     newButton: {
       margin: theme.spacing(1)
+    },
+    mainTitle: {
+      margin: 'auto'
     }
   });
 

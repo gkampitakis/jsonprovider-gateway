@@ -20,7 +20,7 @@ export function* loginSaga(action: Action<LOGIN_ASYNC>) {
 }
 
 
-export function* loginAsync() {
+export function* loginAsyncSaga() {
 
   yield takeEvery(LOGIN_ASYNC, loginSaga);
 

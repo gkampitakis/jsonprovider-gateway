@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -19,12 +19,14 @@ import { Button } from "@material-ui/core";
 
 interface HeaderProps {
   view: ViewState;
+  logged: boolean;
   toggleMenu: (param: boolean) => void;
 }
 
 const mapStateToProps = (state: State) => {
   return {
-    view: state.view
+    view: state.view,
+    logged: state.authorization.authorized
   };
 };
 
@@ -36,49 +38,67 @@ const mapDispatchToProps = (dispatch: any) => {
 
 class Header extends Component<WithStyles<typeof styles> & HeaderProps> {
 
+  loggedView(classes: any, view: ViewState) {
+    return (
+      <Fragment>
+        <IconButton
+          edge="start"
+          className={classes.menuButton}
+          color="inherit"
+          aria-label="open drawer"
+          onClick={() => this.props.toggleMenu(!view.menu.open)}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography className={classes.title} variant="h6" noWrap>
+          JSON Provider
+</Typography>
+        <div className={classes.search}>
+          <div className={classes.searchIcon}>
+            <SearchIcon />
+          </div>
+          <InputBase
+            placeholder="Search…"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </div>
+        <div className={classes.grow} />
+        <div className={classes.sectionDesktop}>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.newButton}
+            endIcon={<Add />}
+          >
+            Create JSON
+    </Button>
+        </div>
+      </Fragment>)
+  }
+
+  loginPrompt(classes: any) {
+    return (
+      <Fragment>
+        <Typography style={{ position: 'absolute' }} className={classes.title} variant="h6" noWrap>
+          JSON Provider
+</Typography>
+        <Typography variant="h4" className={classes.mainTitle}>Login</Typography>
+      </Fragment>
+    )
+  }
+
   public render() {
-    const { classes, view } = this.props;
+    const { classes, view, logged } = this.props;
 
     return (
       <div className={classes.grow}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="open drawer"
-              onClick={() => this.props.toggleMenu(!view.menu.open)}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography className={classes.title} variant="h6" noWrap>
-              JSON Provider
-          </Typography>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </div>
-            <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
-              <Button
-                variant="contained"
-                color="secondary"
-                className={classes.newButton}
-                endIcon={<Add />}
-              >
-                Create JSON
-              </Button>
-            </div>
+            {logged ? this.loggedView(classes, view) : this.loginPrompt(classes)}
           </Toolbar>
         </AppBar>
       </div>

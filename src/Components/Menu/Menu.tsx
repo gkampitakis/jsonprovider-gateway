@@ -13,12 +13,14 @@ import { connect } from "react-redux";
 //TODO: this will be absent when not logged in 
 interface MenuProps {
   view: ViewState;
+  logged: boolean;
   toggleMenu: (param: boolean) => void;
 }
 
 const mapStateToProps = (state: State) => {
   return {
-    view: state.view
+    view: state.view,
+    logged: state.authorization.authorized
   };
 };
 
@@ -29,12 +31,10 @@ const mapDispatchToProps = (dispatch: any) => {
 }
 
 class Menu extends Component<WithStyles<typeof styles> & MenuProps>{
-  //TODO: implement here the hiding on login
-  render = () => {
-    const { classes, view } = this.props;
-    //FIXME: header on top to have avatar and name and a menu like the previous we had
+
+  private menu(classes: any, view: ViewState) {
     return (
-      <div className={classes.root}>
+      <div className={classes.root} >
         <CssBaseline />
         <Drawer
           className={classes.drawer}
@@ -65,13 +65,18 @@ class Menu extends Component<WithStyles<typeof styles> & MenuProps>{
           <Divider />
           <div className={classes.menuFooter}>
             <Link href="">Bugs</Link>
-            {/* FIXME: this needs for themes */}
             <Link href="">Feedback</Link>
             <Link href="">About</Link>
           </div>
         </Drawer>
       </div>
     )
+  }
+
+  render = () => {
+    const { classes, view, logged } = this.props;
+    //FIXME: header on top to have avatar and name and a menu like the previous we had
+    return logged ? this.menu(classes, view) : null;
   }
 }
 

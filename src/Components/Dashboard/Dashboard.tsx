@@ -17,7 +17,9 @@ const mapDispatchToProps = (dispatch: any) => {
 }
 
 class Dashboard extends Component<WithStyles<typeof styles>>{
-
+  render() {
+    return <h1>Dashboard Page</h1>
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Dashboard));
