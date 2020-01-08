@@ -38,43 +38,10 @@ const styles = (theme: Theme) => createStyles({
     height: '25%',
     marginTop: '15px'
   },
-  gitBtn: {
-    border: '0.5px solid' + theme.palette.text.primary,
-    borderRadius: '50px',
-    width: '100px',
-    height: '100px',
-    backgroundColor: theme.palette.background.default,
-    "&:hover": {
-      backgroundColor: theme.palette.background.default
-    }
-  },
-  gitIcon: {
-    fontSize: 80,
-    color: 'black'
-  },
-  fbBtn: {
-    borderRadius: '50px',
-    border: '0.5px solid' + theme.palette.text.primary,
-    width: '100px',
-    height: '100px',
-    backgroundColor: theme.palette.background.default,
-    "&:hover": {
-      backgroundColor: theme.palette.background.default
-    }
-  },
-  fbIcon: {
-    fontSize: 80,
-    color: '#3B5998'
-  },
-  gglBtn: {
-    border: '0.5px solid' + theme.palette.text.primary,
-    borderRadius: '50px',
-    width: '100px',
-    height: '100px',
-    backgroundColor: theme.palette.background.default,
-    "&:hover": {
-      backgroundColor: theme.palette.background.default
-    }
+  visibilityIcon: {
+    cursor: 'pointer',
+    opacity: '0.7',
+    color: theme.palette.text.primary
   }
 });
 

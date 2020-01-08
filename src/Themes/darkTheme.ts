@@ -61,6 +61,22 @@ export const darkTheme = createMuiTheme({
         },
         '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
           borderColor: '#E0E0E0'
+        },
+        '&.Mui-disabled': {
+          '&:hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'inherit'
+          }
+        },
+        '&.Mui-error': {
+          '&:hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'red'
+          },
+          '&:focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'red'
+          },
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'red'
+          }
         }
       },
       notchedOutline: {
@@ -69,7 +85,10 @@ export const darkTheme = createMuiTheme({
     },
     MuiInputBase: {
       root: {
-        color: '#E0E0E0'
+        color: '#E0E0E0',
+        '&.Mui-error': {
+          color: 'red'
+        }
       }
     }
   },

@@ -2,19 +2,26 @@ import React, { Component } from 'react';
 import { WithStyles, withStyles } from "@material-ui/core/styles";
 import styles from './Login.styles';
 import { connect } from "react-redux";
+import validator from 'validator';
 import { State } from "../../Store/Reducers";
 import Card from '@material-ui/core/Card';
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
-import FacebookIcon from '@material-ui/icons/Facebook';
-import GitHubIcon from '@material-ui/icons/GitHub';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import GoogleBtn from '../socialButtons/GoogleBtn/GoogleBtn';
+import GithubBtn from '../socialButtons/GithubBtn/GithubBtn';
+import FacebookBtn from '../socialButtons/FacebookBtn/FacebookBtn';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import * as _ from 'lodash';
+import InputAdornment from "@material-ui/core/InputAdornment";
+import autoBind from 'auto-bind';
 
 const mapStateToProps = (state: State) => {
   return {
-
+    loading: state.loading.status
   }
 };
 
@@ -24,11 +31,147 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 }
 
-class Login extends Component<WithStyles<typeof styles>>{
-  render() {
-    const { classes } = this.props;
+interface LoginState {
+  form: {
+    email: {
+      value: string;
+      valid: boolean;
+      errorMessage: string;
+    },
+    password: {
+      value: string;
+      visible: boolean;
+      valid: boolean;
+      errorMessage: string;
+    }
+  }
+}
 
-    return <Grid container justify={"center"} alignContent={'center'} className={classes.mainGrid}>
+interface LoginProps {
+  loading: boolean;
+}
+
+class Login extends Component<WithStyles<typeof styles> & LoginProps>{
+
+  constructor(props: any) {
+    super(props);
+
+    autoBind(this);
+  }
+
+  state: LoginState = {
+    form: {
+      email: {
+        value: '',
+        valid: true,
+        errorMessage: ''
+      },
+      password: {
+        value: '',
+        valid: true,
+        visible: false,
+        errorMessage: ''
+      }
+    }
+  };
+
+  private login(e: any): void {
+
+    const { form } = this.state;
+
+    if (_.isEmpty(form.email.value)) {
+
+      this.emailValidityState(false);
+
+      setTimeout(() => this.emailValidityState(true), 2000);
+
+    }
+    if (_.isEmpty(form.password.value)) {
+
+      this.passwordValidityState(false);
+
+      setTimeout(() => this.passwordValidityState(true), 2000);
+
+      return;
+    }
+
+  }
+
+  private emailValidityState(status: boolean) {
+
+    const { form } = this.state;
+
+    form.email.valid = status;
+    this.setState({ form: form });
+
+  }
+
+  private passwordValidityState(status: boolean) {
+
+    const { form } = this.state;
+
+    form.password.valid = status;
+    this.setState({ form: form });
+
+  }
+
+  private emailOnChange(e: any): void {
+
+    const { form } = this.state;
+
+    form.email.value = e.target.value;
+    this.setState({ form: form });
+
+  }
+
+  private validateEmail() {
+
+    return (_.debounce(() => {
+      const { form } = this.state;
+
+      if (form.email.value) {
+        this.emailValidityState(validator.isEmail(form.email.value));
+        return;
+      }
+
+      this.emailValidityState(true);
+
+    }, 1500))();
+
+  }
+
+  private passwordOnChange(e: any) {
+
+    const { form } = this.state;
+
+    form.password.value = e.target.value;
+    this.setState({ form: form });
+
+  }
+
+  private toggleVisibility() {
+
+    if (this.props.loading) return;
+
+    const { form } = this.state;
+    form.password.visible = !form.password.visible;
+    this.setState({ form: form });
+
+  }
+
+  private renderVisibilityIcon(classes: any) {
+
+    return this.state.form.password.visible ?
+      <VisibilityIcon className={classes.visibilityIcon} onClick={this.toggleVisibility} />
+      : <VisibilityOffIcon className={classes.visibilityIcon} onClick={this.toggleVisibility} />
+
+  }
+
+  render() {
+    const { classes, loading } = this.props;
+    const { form } = this.state;
+
+    return <Grid container className={classes.mainGrid}>
       <Grid item xs={4} style={{ marginBottom: '10%' }}>
         <Card className={classes.card} >
           <form style={{ padding: '0 5px' }}>
@@ -38,41 +181,51 @@ class Login extends Component<WithStyles<typeof styles>>{
               id="email"
               label="Email"
               variant="outlined"
-            // error={true}
-            // helperText={'Wrong Password'}
+              type="email"
+              value={form.email.value}
+              disabled={loading}
+              onChange={this.emailOnChange}
+              onKeyUp={this.validateEmail}
+              error={!form.email.valid}
+              helperText={form.email.errorMessage}
             />
             <TextField
               className={classes.formField}
               required
               id="password"
               label="Password"
-              type="password"
+              type={form.password.visible ? 'text' : 'password'}
               autoComplete="current-password"
               variant="outlined"
-            // error={true}
-            // helperText={'Wrong Password'}
+              disabled={loading}
+              value={form.password.value}
+              onChange={this.passwordOnChange}
+              error={!form.password.valid}
+              InputProps={{
+                endAdornment:
+                  <InputAdornment position="end">
+                    {this.renderVisibilityIcon(classes)}
+                  </InputAdornment>
+              }}
             />
-            <Button className={classes.loginBtn} variant="contained">
+            <Button
+              disabled={loading}
+              className={classes.loginBtn}
+              onClick={this.login}
+              variant="contained">
               Login
-              </Button>
+            </Button>
           </form>
           <span className={classes.ORDivider}>OR</span>
           <Divider className={classes.divider} />
           <span>Login with:</span>
           <div className={classes.mediaBtns}>
-            <Button className={classes.gglBtn}>
-              <span style={{ fontSize: 20, color: '#4285F4' }}>G</span>
-              <span style={{ fontSize: 20, color: '#EA4335' }}>o</span>
-              <span style={{ fontSize: 20, color: '#FBBC05' }}>o</span>
-              <span style={{ fontSize: 20, color: '#4285F4' }}>g</span>
-              <span style={{ fontSize: 20, color: '#34A853' }}>l</span>
-              <span style={{ fontSize: 20, color: '#EA4335' }}>e</span>
-            </Button>
-            <Button className={classes.fbBtn}><FacebookIcon className={classes.fbIcon} /></Button>
-            <Button className={classes.gitBtn}><GitHubIcon className={classes.gitIcon} /></Button>
+            <GoogleBtn disabled={loading} />
+            <FacebookBtn disabled={loading} />
+            <GithubBtn disabled={loading} />
           </div>
         </Card>
-        {false && <LinearProgress color="secondary" />}
+        {loading && <LinearProgress color="secondary" />}
       </Grid>
     </Grid >
   }

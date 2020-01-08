@@ -16,6 +16,9 @@ export const lightTheme = createMuiTheme({
         '&.Header-inputRoot-6': {
           border: '1px solid #D9D9D9'
         },
+        '&.Mui-error': {
+          color: 'red'
+        },
         borderColor: '#D9D9D9',
         borderRadius: '4px'
       }
@@ -43,6 +46,17 @@ export const lightTheme = createMuiTheme({
         },
         '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
           borderColor: '#D9D9D9'
+        },
+        '&.Mui-error': {
+          '&:hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'red'
+          },
+          '&:focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'red'
+          },
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'red'
+          }
         }
       },
       notchedOutline: {

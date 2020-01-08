@@ -13,9 +13,7 @@ import { State } from "../../Store/Reducers";
 import { toggleMenu } from "../../Store/Actions/View/viewAction";
 import { connect } from "react-redux";
 import { ViewState } from "../../Store/Reducers/View/viewReducer";
-import { Button } from "@material-ui/core";
-
-//TODO: add different view when not logged in
+import Button from "@material-ui/core/Button";
 
 interface HeaderProps {
   view: ViewState;

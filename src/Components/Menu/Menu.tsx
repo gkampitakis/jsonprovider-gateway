@@ -10,7 +10,7 @@ import { State } from "../../Store/Reducers";
 import { toggleMenu } from "../../Store/Actions/View/viewAction";
 import { connect } from "react-redux";
 //TODO: in the future decide what will exist in here and connect it to router
-//TODO: this will be absent when not logged in 
+
 interface MenuProps {
   view: ViewState;
   logged: boolean;
