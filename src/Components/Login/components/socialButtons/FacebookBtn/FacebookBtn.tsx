@@ -1,5 +1,5 @@
 import Button from "@material-ui/core/Button";
-import React, { Component } from 'react';
+import React, { FC, memo } from 'react';
 import { WithStyles, withStyles } from "@material-ui/core/styles";
 import FacebookIcon from '@material-ui/icons/Facebook';
 import styles from './FacebookBtn.styles';
@@ -8,17 +8,16 @@ interface FacebookBtnProps {
   disabled: boolean;
 }
 
-class FacebookBtn extends Component<WithStyles<typeof styles> & FacebookBtnProps>{
-  public render() {
+const FacebookBtn: FC<WithStyles<typeof styles> & FacebookBtnProps> = (props) => {
 
-    const { classes, disabled } = this.props;
+  const { classes, disabled } = props;
 
-    return (<Button
-      disabled={disabled}
-      className={classes.button}>
-      <FacebookIcon className={classes.icon} />
-    </Button>)
-  }
+  return (<Button
+    disabled={disabled}
+    className={classes.button}>
+    <FacebookIcon className={classes.icon} />
+  </Button>)
+
 }
 
-export default withStyles(styles)(FacebookBtn);
+export default memo(withStyles(styles)(FacebookBtn));

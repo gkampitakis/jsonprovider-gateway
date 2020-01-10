@@ -1,26 +1,23 @@
 import Button from "@material-ui/core/Button";
-import React, { Component } from 'react';
+import React, { FC, memo } from 'react';
 import { WithStyles, withStyles } from "@material-ui/core/styles";
 import GitHubIcon from '@material-ui/icons/GitHub';
 import styles from './GithubBtn.styles';
-
-//TODO: turn it to functional pure component
 
 interface GithubBtnProps {
   disabled: boolean;
 }
 
-class GithubBtn extends Component<WithStyles<typeof styles> & GithubBtnProps>{
-  public render() {
+const GithubBtn: FC<WithStyles<typeof styles> & GithubBtnProps> = (props) => {
 
-    const { classes, disabled } = this.props;
+  const { classes, disabled } = props;
 
-    return (<Button
-      disabled={disabled}
-      className={classes.button}>
-      <GitHubIcon className={classes.icon} />
-    </Button>)
-  }
+  return (<Button
+    disabled={disabled}
+    className={classes.button}>
+    <GitHubIcon className={classes.icon} />
+  </Button>)
+
 }
 
-export default withStyles(styles)(GithubBtn);
+export default memo(withStyles(styles)(GithubBtn));

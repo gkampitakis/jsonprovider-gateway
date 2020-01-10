@@ -40,7 +40,7 @@ class Login extends Component<WithStyles<typeof styles> & LoginProps>{
     autoBind(this);
   }
 
-  state: LoginState = {//TODO: add it to react redux
+  state: LoginState = {
     form: {
       email: {
         value: '',

@@ -42,9 +42,10 @@ class Application extends Component<ApplicationProps> {
         <Header />
         <Menu />
         <Switch>
-          <Route path="/login" exact component={Login}></Route>
+          {!logged && <Route path="/login" exact component={Login}></Route>}
           <AuthRoute path="/dashboard" authorized={logged} exact component={Dashboard}></AuthRoute>
-          <AuthRoute path="/" exact authorized={logged} component={Dashboard}></AuthRoute>
+          <AuthRoute path="/" authorized={logged} component={Dashboard}></AuthRoute>
+          {/* TODO: Maybe add 404 page */}
         </Switch>
         <CreateBtn />
       </ThemeProvider>
