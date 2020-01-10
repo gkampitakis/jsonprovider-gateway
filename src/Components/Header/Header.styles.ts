@@ -57,6 +57,7 @@ const styles = (theme: Theme) =>
       }
     },
     newButton: {
+      minWidth: '180px',
       margin: theme.spacing(1)
     },
     mainTitle: {

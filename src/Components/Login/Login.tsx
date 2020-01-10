@@ -10,14 +10,15 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import LinearProgress from '@material-ui/core/LinearProgress';
-import GoogleBtn from '../socialButtons/GoogleBtn/GoogleBtn';
-import GithubBtn from '../socialButtons/GithubBtn/GithubBtn';
-import FacebookBtn from '../socialButtons/FacebookBtn/FacebookBtn';
+import GoogleBtn from './components/socialButtons/GoogleBtn/GoogleBtn';
+import GithubBtn from './components/socialButtons/GithubBtn/GithubBtn';
+import FacebookBtn from './components/socialButtons/FacebookBtn/FacebookBtn';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import * as _ from 'lodash';
 import InputAdornment from "@material-ui/core/InputAdornment";
 import autoBind from 'auto-bind';
+import { loginRequest } from "../../Store/Actions/Authorization/authAction";
+import isEmpty from 'lodash/isEmpty';
 
 const mapStateToProps = (state: State) => {
   return {
@@ -27,28 +28,8 @@ const mapStateToProps = (state: State) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-
+    loginAttempt: (email: string, password: string) => dispatch(loginRequest(email, password))
   };
-}
-
-interface LoginState {
-  form: {
-    email: {
-      value: string;
-      valid: boolean;
-      errorMessage: string;
-    },
-    password: {
-      value: string;
-      visible: boolean;
-      valid: boolean;
-      errorMessage: string;
-    }
-  }
-}
-
-interface LoginProps {
-  loading: boolean;
 }
 
 class Login extends Component<WithStyles<typeof styles> & LoginProps>{
@@ -59,7 +40,7 @@ class Login extends Component<WithStyles<typeof styles> & LoginProps>{
     autoBind(this);
   }
 
-  state: LoginState = {
+  state: LoginState = {//TODO: add it to react redux
     form: {
       email: {
         value: '',
@@ -79,14 +60,15 @@ class Login extends Component<WithStyles<typeof styles> & LoginProps>{
 
     const { form } = this.state;
 
-    if (_.isEmpty(form.email.value)) {
+    if (isEmpty(form.email.value)) {
 
       this.emailValidityState(false);
 
       setTimeout(() => this.emailValidityState(true), 2000);
 
     }
-    if (_.isEmpty(form.password.value)) {
+
+    if (isEmpty(form.password.value)) {
 
       this.passwordValidityState(false);
 
@@ -95,13 +77,26 @@ class Login extends Component<WithStyles<typeof styles> & LoginProps>{
       return;
     }
 
+    if (!validator.isEmail(form.email.value)) {
+
+      this.emailValidityState(false, "Please provide correct email");
+
+      setTimeout(() => this.emailValidityState(true), 2000);
+
+      return;
+
+    }
+
+    this.props.loginAttempt(form.email.value, form.password.value);
+
   }
 
-  private emailValidityState(status: boolean) {
+  private emailValidityState(status: boolean, message = "") {
 
     const { form } = this.state;
 
     form.email.valid = status;
+    form.email.errorMessage = message;
     this.setState({ form: form });
 
   }
@@ -121,22 +116,6 @@ class Login extends Component<WithStyles<typeof styles> & LoginProps>{
 
     form.email.value = e.target.value;
     this.setState({ form: form });
-
-  }
-
-  private validateEmail() {
-
-    return (_.debounce(() => {
-      const { form } = this.state;
-
-      if (form.email.value) {
-        this.emailValidityState(validator.isEmail(form.email.value));
-        return;
-      }
-
-      this.emailValidityState(true);
-
-    }, 1500))();
 
   }
 
@@ -167,6 +146,12 @@ class Login extends Component<WithStyles<typeof styles> & LoginProps>{
 
   }
 
+  private submitWithEnter(e: any) {
+
+    if (e.key === 'Enter') this.login(e);
+
+  }
+
   render() {
     const { classes, loading } = this.props;
     const { form } = this.state;
@@ -182,10 +167,10 @@ class Login extends Component<WithStyles<typeof styles> & LoginProps>{
               label="Email"
               variant="outlined"
               type="email"
+              onKeyDown={this.submitWithEnter}
               value={form.email.value}
               disabled={loading}
               onChange={this.emailOnChange}
-              onKeyUp={this.validateEmail}
               error={!form.email.valid}
               helperText={form.email.errorMessage}
             />
@@ -200,6 +185,7 @@ class Login extends Component<WithStyles<typeof styles> & LoginProps>{
               disabled={loading}
               value={form.password.value}
               onChange={this.passwordOnChange}
+              onKeyDown={this.submitWithEnter}
               error={!form.password.valid}
               InputProps={{
                 endAdornment:
@@ -224,11 +210,32 @@ class Login extends Component<WithStyles<typeof styles> & LoginProps>{
             <FacebookBtn disabled={loading} />
             <GithubBtn disabled={loading} />
           </div>
+          {loading && <LinearProgress className={classes.progressBar} color="secondary" />}
         </Card>
-        {loading && <LinearProgress color="secondary" />}
       </Grid>
     </Grid >
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Login));
+
+interface LoginState {
+  form: {
+    email: {
+      value: string;
+      valid: boolean;
+      errorMessage: string;
+    },
+    password: {
+      value: string;
+      visible: boolean;
+      valid: boolean;
+      errorMessage: string;
+    }
+  }
+}
+
+interface LoginProps {
+  loading: boolean;
+  loginAttempt: (email: string, password: string) => void;
+}

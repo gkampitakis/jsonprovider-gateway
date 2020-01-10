@@ -4,6 +4,8 @@ import { WithStyles, withStyles } from "@material-ui/core/styles";
 import GitHubIcon from '@material-ui/icons/GitHub';
 import styles from './GithubBtn.styles';
 
+//TODO: turn it to functional pure component
+
 interface GithubBtnProps {
   disabled: boolean;
 }

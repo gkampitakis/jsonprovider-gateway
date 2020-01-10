@@ -11,7 +11,7 @@ const styles = (theme: Theme) => createStyles({
   mainGrid: {
     justifyContent: 'center',
     alignContent: 'center',
-    height: '95%'
+    height: '94%'
   },
   formField: {
     width: '100%',
@@ -35,13 +35,17 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     justifyContent: 'space-around',
     width: '100%',
-    height: '25%',
+    height: '26%',
     marginTop: '15px'
   },
   visibilityIcon: {
     cursor: 'pointer',
     opacity: '0.7',
     color: theme.palette.text.primary
+  },
+  progressBar: {
+    height: '5px',
+    width: '100%'
   }
 });
 
