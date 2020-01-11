@@ -9,7 +9,7 @@ export interface AuthState {
 }
 
 const defaultState: AuthState = {
-  authorized: true,
+  authorized: false,
   userId: '',
   token: '',
   errorMessage: ''
@@ -18,7 +18,7 @@ const defaultState: AuthState = {
 export const authReducer = handleActions({
   [LOGIN_SUCCESS]: loginSuccessReducer,
   [LOGOUT]: logoutReducer,
-  [LOGIN_FAILURE]:loginFailureReducer
+  [LOGIN_FAILURE]: loginFailureReducer
 }, defaultState);
 
 

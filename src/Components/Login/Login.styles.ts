@@ -1,8 +1,13 @@
 import { Theme, createStyles } from "@material-ui/core/styles";
 
 const styles = (theme: Theme) => createStyles({
+  root: {
+    '&MuiGrid-grid-xs-3': {
+
+    }
+  },
   card: {
-    height: 430,
+    height: 480,
     minWidth: 275,
     display: 'flex',
     flexDirection: 'column',
@@ -11,10 +16,10 @@ const styles = (theme: Theme) => createStyles({
   mainGrid: {
     justifyContent: 'center',
     alignContent: 'center',
-    height: '94%'
+    height: '93%'
   },
   formField: {
-    width: '100%',
+    width: '90%',
     margin: '15px 0 0 0',
     minHeight: '76px'
   },
@@ -35,8 +40,8 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     justifyContent: 'space-around',
     width: '100%',
-    height: '26%',
-    marginTop: '15px'
+    height: '20%',
+    margin: 'auto'
   },
   visibilityIcon: {
     cursor: 'pointer',
@@ -46,6 +51,12 @@ const styles = (theme: Theme) => createStyles({
   progressBar: {
     height: '5px',
     width: '100%'
+  },
+  linkSession: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-around",
+    marginTop: "15px"
   }
 });
 

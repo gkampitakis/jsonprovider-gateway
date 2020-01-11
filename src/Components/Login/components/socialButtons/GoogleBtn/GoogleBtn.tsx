@@ -12,12 +12,12 @@ const GoogleBtn: FC<WithStyles<typeof styles> & GoogleBtnProps> = (props) => {
   const { classes, disabled } = props;
 
   return (<Button disabled={disabled} className={classes.button}>
-    <span style={{ fontSize: 20, color: '#4285F4' }}>G</span>
-    <span style={{ fontSize: 20, color: '#EA4335' }}>o</span>
-    <span style={{ fontSize: 20, color: '#FBBC05' }}>o</span>
-    <span style={{ fontSize: 20, color: '#4285F4' }}>g</span>
-    <span style={{ fontSize: 20, color: '#34A853' }}>l</span>
-    <span style={{ fontSize: 20, color: '#EA4335' }}>e</span>
+    <span style={{ fontSize: 14, color: '#4285F4' }}>G</span>
+    <span style={{ fontSize: 14, color: '#EA4335' }}>o</span>
+    <span style={{ fontSize: 14, color: '#FBBC05' }}>o</span>
+    <span style={{ fontSize: 14, color: '#4285F4' }}>g</span>
+    <span style={{ fontSize: 14, color: '#34A853' }}>l</span>
+    <span style={{ fontSize: 14, color: '#EA4335' }}>e</span>
   </Button>)
 
 }

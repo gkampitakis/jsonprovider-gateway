@@ -4,6 +4,8 @@ import styles from './Dashboard.styles';
 import { connect } from "react-redux";
 import { State } from "../../Store/Reducers";
 
+//TODO: create shadow elements
+
 const mapStateToProps = (state: State) => {
   return {
 

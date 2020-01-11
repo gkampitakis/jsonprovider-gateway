@@ -18,6 +18,7 @@
     "@typescript-eslint/eslint-plugin": "^2.13.0",
     "@typescript-eslint/parser": "^2.13.0",
     "auto-bind": "^4.0.0",
+    "axios": "^0.19.1",
     "clsx": "^1.0.4",
     "connected-react-router": "6.0.0",
     "eslint": "^6.8.0",
@@ -56,6 +57,7 @@
     ]
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/history": "^4.7.3",
     "@types/lodash": "^4.14.149",
     "@types/react": "^16.9.17",

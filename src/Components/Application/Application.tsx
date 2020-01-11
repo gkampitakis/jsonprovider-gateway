@@ -47,7 +47,7 @@ class Application extends Component<ApplicationProps> {
           <AuthRoute path="/" authorized={logged} component={Dashboard}></AuthRoute>
           {/* TODO: Maybe add 404 page */}
         </Switch>
-        <CreateBtn />
+        <CreateBtn authorized={logged}/>
       </ThemeProvider>
     )
   }

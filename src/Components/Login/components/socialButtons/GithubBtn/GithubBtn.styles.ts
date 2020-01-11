@@ -2,10 +2,9 @@ import { Theme, createStyles } from "@material-ui/core/styles";
 
 const styles = (theme: Theme) => createStyles({
   button: {
-    border: '0.5px solid' + theme.palette.text.primary,
     borderRadius: '50px',
-    width: '100px',
-    height: '100px',
+    width: '60px',
+    height: '60px',
     backgroundColor: theme.palette.background.default,
     "&:hover": {
       backgroundColor: theme.palette.background.default
@@ -15,7 +14,7 @@ const styles = (theme: Theme) => createStyles({
     }
   },
   icon: {
-    fontSize: 80,
+    fontSize: 50,
     color: 'black'
   }
 });

@@ -6,7 +6,7 @@ export type LOGIN_SUCCESS = {
 }
 
 export type LOGIN_REQUEST = {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -21,19 +21,10 @@ export const LOGIN_SUCCESS = 'loginSuccess',
   LOGIN_FAILURE = 'loginFailure',
   LOGOUT = 'logout';
 
-export const loginSuccess = createAction(LOGIN_SUCCESS, (token: string, userId: string) => {
-  localStorage.setItem('token', token);
-  localStorage.setItem('userId', userId);//TODO: evaluate this probably should go to the API
-  return {
-    token,
-    userId
-  };
-});
+export const loginRequest = createAction(LOGIN_REQUEST, (email: string, password: string) => ({ email, password }));
 
-export const loginRequest = createAction(LOGIN_REQUEST, (username: string, password: string) => ({ username, password }));
+export const loginSuccess = createAction(LOGIN_SUCCESS, (token: string, userId: string) => ({ token, userId }));
 
 export const logout = createAction(LOGOUT);
 
-export const loginFailure = createAction(LOGIN_FAILURE, (message: string) => ({ message }));
-
-//TODO: how from login success to redirect to dashboard
+export const loginFailure = createAction(LOGIN_FAILURE, (message: string) => ({ message })); //TODO: check how to implement this

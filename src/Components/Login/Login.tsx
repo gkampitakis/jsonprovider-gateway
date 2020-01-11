@@ -19,6 +19,8 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import autoBind from 'auto-bind';
 import { loginRequest } from "../../Store/Actions/Authorization/authAction";
 import isEmpty from 'lodash/isEmpty';
+import Link from "../Utils/Link/Link";
+//TODO: add fade when leaving route
 
 const mapStateToProps = (state: State) => {
   return {
@@ -157,7 +159,7 @@ class Login extends Component<WithStyles<typeof styles> & LoginProps>{
     const { form } = this.state;
 
     return <Grid container className={classes.mainGrid}>
-      <Grid item xs={4} style={{ marginBottom: '10%' }}>
+      <Grid item xs={"auto"} style={{ marginBottom: '10%', maxWidth: '50%' }}>
         <Card className={classes.card} >
           <form style={{ padding: '0 5px' }}>
             <TextField
@@ -202,6 +204,10 @@ class Login extends Component<WithStyles<typeof styles> & LoginProps>{
               Login
             </Button>
           </form>
+          <Grid item className={classes.linkSession}>
+            <Link disabled={loading}>New here? Register</Link>
+            <Link disabled={loading}>Forgot Password</Link>
+          </Grid>
           <span className={classes.ORDivider}>OR</span>
           <Divider className={classes.divider} />
           <span>Login with:</span>
@@ -210,7 +216,7 @@ class Login extends Component<WithStyles<typeof styles> & LoginProps>{
             <FacebookBtn disabled={loading} />
             <GithubBtn disabled={loading} />
           </div>
-          {loading && <LinearProgress className={classes.progressBar} color="secondary" />}
+          <LinearProgress style={loading ? {} : { visibility: "hidden" }} className={classes.progressBar} color="secondary" />
         </Card>
       </Grid>
     </Grid >

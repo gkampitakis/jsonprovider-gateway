@@ -3,18 +3,24 @@ import { withStyles, WithStyles, Fab } from "@material-ui/core";
 import styles from './CreateBtn.styles';
 import AddIcon from '@material-ui/icons/Add';
 
-const CreateBtn: React.FC<WithStyles<typeof styles>> = (props) => {
+interface CreateBtnProps {
+  authorized: boolean;
+}
 
-  const { classes } = props;
+const CreateBtn: React.FC<WithStyles<typeof styles> & CreateBtnProps> = (props) => {
 
-  return (<Fab
+  const { classes, authorized } = props;
+
+  const button = (<Fab
     className={classes.fab}
     color="secondary"
     aria-label="add"
     size="large"
   >
     <AddIcon />
-  </Fab>);
+  </Fab>)
+
+  return authorized ? button : null;
 
 };
 
