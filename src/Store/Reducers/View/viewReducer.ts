@@ -12,7 +12,7 @@ const defaultState: ViewState = {
   menu: {
     open: false
   },
-  selectedTheme: 'darkTheme' //'lightTheme'
+  selectedTheme: localStorage.getItem("theme") as 'darkTheme' | 'lightTheme' || 'lightTheme'
 };
 
 export const viewReducer = handleActions({

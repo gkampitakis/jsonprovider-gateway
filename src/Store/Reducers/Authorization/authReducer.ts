@@ -9,9 +9,9 @@ export interface AuthState {
 }
 
 const defaultState: AuthState = {
-  authorized: false,
-  userId: '',
-  token: '',
+  authorized: !!localStorage.getItem("token"),
+  userId: localStorage.getItem("userId") || "",
+  token: localStorage.getItem("token") || "",
   errorMessage: ''
 };
 

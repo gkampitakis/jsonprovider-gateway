@@ -2,8 +2,8 @@ import { createBrowserHistory, History } from "history";
 import { applyMiddleware, compose, createStore } from "redux";
 import { routerMiddleware } from "connected-react-router";
 import createSagaMiddleware from "@redux-saga/core";
-import rootReducer from "./Reducers";
 import rootSaga from "./Sagas";
+import rootReducer from "./Reducers";
 
 const composeEnhancer: typeof compose = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -24,4 +24,3 @@ export const store = createStore(
 sagaMiddleware.run(rootSaga);
 
 // TODO: handle Login
-// TODO: spike on how to load data from local storage or on init
