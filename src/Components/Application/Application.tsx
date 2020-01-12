@@ -13,8 +13,6 @@ import Login from "../Login/Login";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import CreateBtn from "./components/CreateBtn";
 import Notifier from '../Utils/Notifier/Notifier';
-import { NotificationFactory } from '../Utils/Notifier/NotificationFactory';
-import { enqueueNotification, closeNotification } from "../../Store/Actions/Notifications/notificationsAction";
 import { SnackbarProvider } from "notistack";
 import { iconVariant } from "../Utils/Notifier/Notification.styles";
 
@@ -26,8 +24,6 @@ const theme = {
 interface ApplicationProps {
   selectedTheme: "darkTheme" | "lightTheme";
   logged: boolean;
-  test: (obj: any) => void;
-  closeSnackbar: (key: string) => void
 }
 
 const mapStateToProps = (state: State) => ({
@@ -35,22 +31,7 @@ const mapStateToProps = (state: State) => ({
   logged: state.authorization.authorized,
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
-  test: (not: any) => dispatch(enqueueNotification(not)),
-  closeSnackbar: (key: string) => dispatch(closeNotification(key))//TODO:rename here
-});
-
-
 class Application extends Component<ApplicationProps> {
-
-  public test = () => {
-
-    this.props.test(NotificationFactory.error(
-      'test',
-      this.props.closeSnackbar
-    ));
-
-  }
 
   public render() {
 
@@ -58,12 +39,15 @@ class Application extends Component<ApplicationProps> {
 
     return (
       <ThemeProvider theme={theme[selectedTheme]}>
-        <SnackbarProvider iconVariant={iconVariant} maxSnack={3} dense>
+        <SnackbarProvider
+          iconVariant={iconVariant}
+          maxSnack={3}
+          dense
+        >
           <CssBaseline />
           <Notifier />
           <Header />
           <Menu />
-          <button onClick={this.test}>Test</button>
           <Switch>
             {!logged && <Route path="/login" exact component={Login}></Route>}
             <AuthRoute path="/dashboard" authorized={logged} exact component={Dashboard}></AuthRoute>
@@ -77,4 +61,4 @@ class Application extends Component<ApplicationProps> {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Application));
+export default withRouter(connect(mapStateToProps)(Application));
