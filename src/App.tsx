@@ -10,7 +10,7 @@ const App: React.FC = () => {
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <div className="App">
-        <Application />
+          <Application />
         </div>
       </ConnectedRouter>
     </Provider>

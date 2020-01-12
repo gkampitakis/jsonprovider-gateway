@@ -24,6 +24,7 @@
     "eslint": "^6.8.0",
     "history": "^4.10.1",
     "lodash": "^4.17.15",
+    "notistack": "^0.9.7",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-redux": "^7.1.3",
