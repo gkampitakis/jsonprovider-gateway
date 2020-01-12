@@ -4,10 +4,13 @@ import { LOGIN_REQUEST, loginSuccess } from '../../Actions/Authorization/authAct
 import { loading } from "../../Actions/Loading/loadingAction";
 import { Action } from 'redux-actions';
 import { push } from 'connected-react-router';
+import { enqueueNotification, closeNotification } from "../../Actions/Notifications/notificationsAction";
+import { NotificationFactory } from "../../../Components/Utils/Notifier/NotificationFactory";
+import { Dispatch } from "redux";
 
 // const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
-export function* loginSaga(action: Action<LOGIN_REQUEST>) {
+function* loginSaga(action: Action<LOGIN_REQUEST>, dispatch: Dispatch) {
 
   yield put(loading(true));
 
@@ -23,26 +26,24 @@ export function* loginSaga(action: Action<LOGIN_REQUEST>) {
 
     yield put(push("/dashboard"));
 
-  } catch (error) {
+  } catch ({ response }) {
 
-    console.log(error);
-    //FIXME:
-    // yield put(loginFailure('Error Message'));
+    yield put(enqueueNotification(NotificationFactory.error(
+      response.data.message,
+      (key: string) => dispatch(closeNotification(key))
+    )));
+
   } finally {
 
     yield put(loading(false));
 
   }
 
-
 }
 
 
-export function* loginAsyncSaga() {
+export function* loginAsyncSaga(dispatch: Dispatch) {
 
-  yield takeEvery(LOGIN_REQUEST, loginSaga);
+  yield takeEvery(LOGIN_REQUEST, (action: Action<LOGIN_REQUEST>) => loginSaga(action, dispatch));
 
 }
-
-//TODO: login success and login failure and fix the types
-//TODO: implement api

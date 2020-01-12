@@ -21,14 +21,7 @@ class AuthorizationApi extends API {
 
         return result.data;
 
-      })
-      .catch(err => {
-
-        console.error(err);
-        //FIXME:
-        throw new Error('This error needs changing');
-
-      });
+      }); 
 
   }
 

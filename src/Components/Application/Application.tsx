@@ -1,5 +1,5 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import Header from "../Header/Header";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { darkTheme } from "../../Themes/darkTheme";
@@ -12,6 +12,11 @@ import Dashboard from "../Dashboard/Dashboard";
 import Login from "../Login/Login";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import CreateBtn from "./components/CreateBtn";
+import Notifier from '../Utils/Notifier/Notifier';
+import { NotificationFactory } from '../Utils/Notifier/NotificationFactory';
+import { enqueueNotification, closeNotification } from "../../Store/Actions/Notifications/notificationsAction";
+import { SnackbarProvider } from "notistack";
+import { iconVariant } from "../Utils/Notifier/Notification.styles";
 
 const theme = {
   darkTheme,
@@ -21,16 +26,31 @@ const theme = {
 interface ApplicationProps {
   selectedTheme: "darkTheme" | "lightTheme";
   logged: boolean;
+  test: (obj: any) => void;
+  closeSnackbar: (key: string) => void
 }
 
-const mapStateToProps = (state: State) => {
-  return {
-    selectedTheme: state.view.selectedTheme,
-    logged: state.authorization.authorized
-  }
-};
+const mapStateToProps = (state: State) => ({
+  selectedTheme: state.view.selectedTheme,
+  logged: state.authorization.authorized,
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+  test: (not: any) => dispatch(enqueueNotification(not)),
+  closeSnackbar: (key: string) => dispatch(closeNotification(key))//TODO:rename here
+});
+
 
 class Application extends Component<ApplicationProps> {
+
+  public test = () => {
+
+    this.props.test(NotificationFactory.error(
+      'test',
+      this.props.closeSnackbar
+    ));
+
+  }
 
   public render() {
 
@@ -38,19 +58,23 @@ class Application extends Component<ApplicationProps> {
 
     return (
       <ThemeProvider theme={theme[selectedTheme]}>
-        <CssBaseline />
-        <Header />
-        <Menu />
-        <Switch>
-          {!logged && <Route path="/login" exact component={Login}></Route>}
-          <AuthRoute path="/dashboard" authorized={logged} exact component={Dashboard}></AuthRoute>
-          <AuthRoute path="/" authorized={logged} component={Dashboard}></AuthRoute>
-          {/* TODO: Maybe add 404 page */}
-        </Switch>
-        <CreateBtn authorized={logged}/>
+        <SnackbarProvider iconVariant={iconVariant} maxSnack={3} dense>
+          <CssBaseline />
+          <Notifier />
+          <Header />
+          <Menu />
+          <button onClick={this.test}>Test</button>
+          <Switch>
+            {!logged && <Route path="/login" exact component={Login}></Route>}
+            <AuthRoute path="/dashboard" authorized={logged} exact component={Dashboard}></AuthRoute>
+            <AuthRoute path="/" authorized={logged} component={Dashboard}></AuthRoute>
+            {/* TODO: Maybe add 404 page */}
+          </Switch>
+          <CreateBtn authorized={logged} />
+        </SnackbarProvider>
       </ThemeProvider>
     )
   }
 }
 
-export default withRouter(connect(mapStateToProps)(Application));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Application));

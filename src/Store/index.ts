@@ -4,6 +4,7 @@ import { routerMiddleware } from "connected-react-router";
 import createSagaMiddleware from "@redux-saga/core";
 import rootSaga from "./Sagas";
 import rootReducer from "./Reducers";
+import { Dispatch } from "redux";
 
 const composeEnhancer: typeof compose = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -21,6 +22,4 @@ export const store = createStore(
   ),
 );
 
-sagaMiddleware.run(rootSaga);
-
-// TODO: handle Login
+sagaMiddleware.run(rootSaga, store.dispatch as Dispatch);
