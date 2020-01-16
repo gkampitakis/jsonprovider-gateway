@@ -2,8 +2,6 @@ import { API } from '../API';
 import autoBind from 'auto-bind';
 import { AxiosResponse } from 'axios';
 
-const apiEndPoint = 'http://localhost:5000/';//FIXME:
-//TODO: create dynamic config
 class AuthorizationApi extends API {
 
   constructor() {
@@ -15,13 +13,13 @@ class AuthorizationApi extends API {
 
   public loginRequest(email: string, password: string): Promise<{ token: string; userId: string }> {
 
-    return this.postRequest(apiEndPoint + 'auth',
+    return this.postRequest(this.apiEndpoint + 'auth',
       { email: email, password: password })
       .then((result: AxiosResponse) => {
 
         return result.data;
 
-      }); 
+      });
 
   }
 
