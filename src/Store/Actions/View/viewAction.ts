@@ -8,7 +8,7 @@ export const TOGGLE_MENU = "toggleMenu",
   ENABLE_DARK_MODE = "enableDarkMode",
   ENABLE_LIGHT_MODE = "enableLightMode";
 
-export const toggleMenu = createAction(TOGGLE_MENU, (param: boolean) => ({ open: param }));
+export const toggleMenu = createAction(TOGGLE_MENU, (param: boolean) => ({ open: param })); //TODO: this might be deprecated
 
 export const enableDarkMode = createAction(ENABLE_DARK_MODE, () => {
 

@@ -9,7 +9,7 @@ export interface ViewState { //TODO: this will be expanded
 }
 
 const defaultState: ViewState = {
-  menu: {
+  menu: {//TODO: this might be deprecated
     open: false
   },
   selectedTheme: localStorage.getItem("theme") as 'darkTheme' | 'lightTheme' || 'lightTheme'

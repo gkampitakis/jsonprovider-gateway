@@ -7,9 +7,8 @@ const styles = (theme: Theme) =>
       bottom: '10%',
       right: '5%',
       display: 'flex',
-      [theme.breakpoints.up('md')]: {
-        display: 'none'
-      }
+      width: '70px',
+      height: '70px'
     }
   });
 

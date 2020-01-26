@@ -5,7 +5,7 @@ const styles = (theme: Theme) =>
     grow: {
       flexGrow: 1
     },
-    menuButton: {
+    menuRightPos: {
       marginRight: theme.spacing(2)
     },
     title: {
@@ -56,12 +56,11 @@ const styles = (theme: Theme) =>
         display: 'flex'
       }
     },
-    newButton: {
-      minWidth: '180px',
-      margin: theme.spacing(1)
-    },
     mainTitle: {
       margin: 'auto'
+    },
+    logoIcon: {
+      width: '90px'
     }
   });
 

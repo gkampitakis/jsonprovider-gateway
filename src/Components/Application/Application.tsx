@@ -5,7 +5,6 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import { darkTheme } from "../../Themes/darkTheme";
 import { lightTheme } from "../../Themes/lightTheme";
 import { State } from "../../Store/Reducers";
-import Menu from "../Menu/Menu";
 import { Switch, Route, withRouter } from "react-router-dom";
 import { AuthRoute } from "../Utils/AuthRoute";
 import Dashboard from "../Dashboard/Dashboard";
@@ -47,7 +46,6 @@ class Application extends Component<ApplicationProps> {
           <CssBaseline />
           <Notifier />
           <Header />
-          <Menu />
           <Switch>
             {!logged && <Route path="/login" exact component={Login}></Route>}
             <AuthRoute path="/dashboard" authorized={logged} exact component={Dashboard}></AuthRoute>
