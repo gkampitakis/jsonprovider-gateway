@@ -20,7 +20,6 @@ import autoBind from 'auto-bind';
 import { loginRequest } from "../../Store/Actions/Authorization/authAction";
 import isEmpty from 'lodash/isEmpty';
 import Link from "../Utils/Link/Link";
-//TODO: add fade when leaving route
 
 const mapStateToProps = (state: State) => {
   return {

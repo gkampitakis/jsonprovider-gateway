@@ -15,7 +15,7 @@ const rootReducer = (history: History) => combineReducers({
 });
 
 export interface State {
-  router?: RouterState;
+  router: RouterState;
   view: ViewState;
   authorization: AuthState;
   loading: LoadingState;

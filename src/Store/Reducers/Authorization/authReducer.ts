@@ -1,5 +1,6 @@
 import { handleActions, Action } from 'redux-actions';
 import { LOGIN_SUCCESS, LOGOUT, LOGIN_FAILURE } from '../../Actions/Authorization/authAction';
+import { Authorization } from '../../../Api';
 
 export interface AuthState {
   authorized: boolean;
@@ -27,6 +28,8 @@ function loginSuccessReducer(state: AuthState, action: Action<LOGIN_SUCCESS>) {
 }
 
 function logoutReducer(state: AuthState, action: Action<LOGOUT>) {
+  
+  Authorization.logoutUser();
   return { ...state, authorized: false, token: '', userId: '' };
 }
 

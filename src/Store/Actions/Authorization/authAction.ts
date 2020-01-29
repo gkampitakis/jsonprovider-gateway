@@ -27,4 +27,4 @@ export const loginSuccess = createAction(LOGIN_SUCCESS, (token: string, userId: 
 
 export const logout = createAction(LOGOUT);
 
-export const loginFailure = createAction(LOGIN_FAILURE, (message: string) => ({ message })); //TODO: check how to implement this
+export const loginFailure = createAction(LOGIN_FAILURE, (message: string) => ({ message }));

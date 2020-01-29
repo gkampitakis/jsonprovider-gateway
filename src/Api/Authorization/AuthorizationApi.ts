@@ -30,6 +30,13 @@ class AuthorizationApi extends API {
 
   }
 
+  public logoutUser(){
+
+    this.removeFromStorage('token');
+    this.removeFromStorage('userId');
+
+  }
+
 }
 
 export const Authorization = new AuthorizationApi();

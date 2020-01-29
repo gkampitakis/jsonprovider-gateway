@@ -5,10 +5,9 @@ const styles = (theme: Theme) =>
     grow: {
       flexGrow: 1
     },
-    menuRightPos: {
-      marginRight: theme.spacing(2)
-    },
     title: {
+      position: 'absolute',
+      left: '120px',
       display: 'none',
       [theme.breakpoints.up('sm')]: {
         display: 'block'
@@ -22,10 +21,10 @@ const styles = (theme: Theme) =>
         backgroundColor: fade(theme.palette.common.white, 0.25)
       },
       marginRight: theme.spacing(2),
-      marginLeft: '15%',
+      marginLeft: '25%',
       width: '50%',
       [theme.breakpoints.up('sm')]: {
-        marginLeft: '15%',
+        marginLeft: '25%',
         width: '50%'
       }
     },
@@ -60,7 +59,12 @@ const styles = (theme: Theme) =>
       margin: 'auto'
     },
     logoIcon: {
-      width: '90px'
+      width: '90px',
+      position: 'absolute'
+    },
+    logo: {
+      display: 'contents',
+      cursor: 'pointer'
     }
   });
 

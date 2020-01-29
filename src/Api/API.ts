@@ -33,4 +33,10 @@ export abstract class API {
 
   }
 
+  protected removeFromStorage(key: string): void {
+
+    localStorage.removeItem(key);
+
+  }
+
 }
