@@ -16,7 +16,9 @@ const styles = (theme: Theme) => createStyles({
   mainGrid: {
     justifyContent: 'center',
     alignContent: 'center',
-    height: '93%'
+    height: '93%',
+    maxWidth: '50%',
+    margin: 'auto'
   },
   formField: {
     width: '90%',

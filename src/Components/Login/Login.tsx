@@ -158,7 +158,7 @@ class Login extends Component<WithStyles<typeof styles> & LoginProps>{
     const { form } = this.state;
 
     return <Grid container className={classes.mainGrid}>
-      <Grid item xs={"auto"} style={{ marginBottom: '10%', maxWidth: '50%' }}>
+      <Grid item xs={"auto"} style={{ marginBottom: '10%' }}>
         <Card className={classes.card} >
           <form style={{ padding: '0 5px' }}>
             <TextField
