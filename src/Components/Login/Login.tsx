@@ -20,6 +20,7 @@ import autoBind from 'auto-bind';
 import { loginRequest } from "../../Store/Actions/Authorization/authAction";
 import isEmpty from 'lodash/isEmpty';
 import Link from "../Utils/Link/Link";
+import Modal from '../Utils/Modal/Modal'; //TODO: remove testing
 
 const mapStateToProps = (state: State) => {
   return {
@@ -32,6 +33,10 @@ const mapDispatchToProps = (dispatch: any) => {
     loginAttempt: (email: string, password: string) => dispatch(loginRequest(email, password))
   };
 }
+
+//TODO: this might need refactor
+//TODO: check what is updated with dev tools
+//TODO: maybe it needs to be broken to more components
 
 class Login extends Component<WithStyles<typeof styles> & LoginProps>{
 
@@ -217,6 +222,12 @@ class Login extends Component<WithStyles<typeof styles> & LoginProps>{
           </div>
           <LinearProgress style={loading ? {} : { visibility: "hidden" }} className={classes.progressBar} color="secondary" />
         </Card>
+        <Modal
+          title={"My Modal"}
+          open={true}
+        >
+          <p>Hello World</p>
+        </Modal>
       </Grid>
     </Grid >
   }
