@@ -22,7 +22,7 @@ export abstract class API {
   }
 
   protected getUserId() {
-
+    //FIXME: not yet used
     return '123';
 
   }

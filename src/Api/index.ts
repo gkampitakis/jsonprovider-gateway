@@ -1,1 +1,1 @@
-export { Authorization } from './Authorization/AuthorizationApi';
+export { Authorization } from './Controllers/AuthorizationApi';

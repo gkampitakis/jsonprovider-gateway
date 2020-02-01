@@ -21,10 +21,7 @@ export const LOGIN_SUCCESS = 'loginSuccess',
   LOGIN_FAILURE = 'loginFailure',
   LOGOUT = 'logout';
 
-export const loginRequest = createAction(LOGIN_REQUEST, (email: string, password: string) => ({ email, password }));
-
-export const loginSuccess = createAction(LOGIN_SUCCESS, (token: string, userId: string) => ({ token, userId }));
-
-export const logout = createAction(LOGOUT);
-
-export const loginFailure = createAction(LOGIN_FAILURE, (message: string) => ({ message }));
+export const loginRequest = createAction(LOGIN_REQUEST, (email: string, password: string) => ({ email, password })),
+  loginSuccess = createAction(LOGIN_SUCCESS, (token: string, userId: string) => ({ token, userId })),
+  logout = createAction(LOGOUT),
+  loginFailure = createAction(LOGIN_FAILURE, (message: string) => ({ message }));

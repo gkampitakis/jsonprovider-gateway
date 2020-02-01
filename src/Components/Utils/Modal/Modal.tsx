@@ -7,29 +7,30 @@ import styles from './Modal.styles';
 import CloseIcon from '@material-ui/icons/Close';
 
 interface ModalProps {
-  open?: boolean;//TODO: this ll be changed
-  handleClose?: () => void;//TODO: this ll be changed
+  open: boolean;
+  handleClose: () => void;
   title?: string;
+  width?: number;
+  height?: number;
+  cssStyle?: {};
 }
 
 const _Modal: React.FC<WithStyles<typeof styles> & ModalProps> = (props) => {
 
   const {
     classes,
-    // open,
-    // handleClose,
+    open,
+    handleClose,
     children,
-    title
+    width,
+    height,
+    title,
+    cssStyle
   } = props;
-
-  const [open, setOpen] = useState(true);
-
-  const handleClose = () => {
-    setOpen(false);
-  }
 
   return (
     <Modal
+      style={cssStyle}
       className={classes.modal}
       open={open}
       onClose={handleClose}
@@ -40,8 +41,7 @@ const _Modal: React.FC<WithStyles<typeof styles> & ModalProps> = (props) => {
       }}
     >
       <Slide direction="up" in={open}>
-        {/* TODO: this classes can be dynamic */}
-        <div className={classes.paper}>
+        <div className={classes.paper} style={{ width, height }}>
           <div className={classes.header}>
             <h2 className={classes.title}>{title}</h2>
             <CloseIcon

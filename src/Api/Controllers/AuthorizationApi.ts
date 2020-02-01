@@ -30,7 +30,19 @@ class AuthorizationApi extends API {
 
   }
 
-  public logoutUser(){
+  public forgotPassRequest(email: string) {
+
+    return this.postRequest(this.apiEndpoint + 'user/password',
+      { email })
+      .then((result: AxiosResponse) => {
+
+        return result.data;
+
+      });
+
+  }
+
+  public logoutUser() {
 
     this.removeFromStorage('token');
     this.removeFromStorage('userId');

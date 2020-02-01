@@ -1,4 +1,4 @@
-import { createStyles, Theme } from "@material-ui/core";
+import { createStyles, Theme } from '@material-ui/core';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -13,8 +13,10 @@ const styles = (theme: Theme) =>
       border: '1px solid #000',
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
-      minWidth: '40%',
-      minHeight: '40%'
+      minWidth: '30%',
+      minHeight: '20%',
+      display: 'flex',
+      flexDirection: 'column'
     },
     title: {
       marginTop: '0px'
