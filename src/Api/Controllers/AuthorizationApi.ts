@@ -42,8 +42,19 @@ class AuthorizationApi extends API {
 
   }
 
+  public resetPassword(password: string, token: string) {
+
+    return this.putRequest(this.apiEndpoint + 'user/password?t=' + token,
+      { password })
+      .then((result: AxiosResponse) => {
+        return result.data;
+      });
+
+  }
+
   public logoutUser() {
 
+    //TODO: add call here to remove the token from the database
     this.removeFromStorage('token');
     this.removeFromStorage('userId');
 

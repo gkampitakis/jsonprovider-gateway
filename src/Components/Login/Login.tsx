@@ -156,7 +156,7 @@ const Login: React.FC<WithStyles<typeof styles> & LoginProps> = (props) => {
 
     }
 
-    props.loginAttempt(emailForm.value, passwordForm.value);
+    loginAttempt(emailForm.value, passwordForm.value);
 
   }
 

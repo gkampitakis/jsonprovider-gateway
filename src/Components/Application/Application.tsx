@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../Header/Header';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -16,6 +16,7 @@ import { SnackbarProvider } from 'notistack';
 import { iconVariant } from '../Utils/Notifier/Notification.styles';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import { RouterState } from 'connected-react-router';
+import SetPassword from '../Login/components/SetPassword/SetPassword';
 
 const theme = {
   darkTheme,
@@ -51,6 +52,7 @@ const Application: React.FC<ApplicationProps> = (props) => {
         <Header />
         <Switch>
           {!logged && <Route path="/login" exact component={Login} />}
+          {!logged && <Route path="/password/new" exact component={SetPassword} />}
           <AuthRoute path="/dashboard" authorized={logged} exact component={Dashboard} />
           <AuthRoute path="/" exact authorized={logged} component={Dashboard} />
           <Route path="/404" exact component={PageNotFound} />
