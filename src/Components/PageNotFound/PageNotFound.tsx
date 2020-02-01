@@ -1,14 +1,40 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core';
 import styles from './PageNotFound.styles';
 import Button from '@material-ui/core/Button';
 import notFoundLogo from '../../assets/404.png';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import { setHeaderTitle } from '../../Store/Actions/View/viewAction';
 
-const PageNotFound: React.FC<WithStyles<typeof styles>> = (props) => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
 
-  const { classes } = props,
+  return {
+    setHeaderTitle: (title: string) => dispatch(setHeaderTitle(title))
+  }
+
+}
+
+interface PageNotFoundProps {
+  setHeaderTitle: (title: string) => void;
+}
+
+const PageNotFound: React.FC<WithStyles<typeof styles> & PageNotFoundProps> = (props) => {
+
+  const { setHeaderTitle, classes } = props,
     history = useHistory();
+
+  useEffect(() => {
+
+    setHeaderTitle('Page Not Found');
+
+    return () => {
+
+      setHeaderTitle('Login');
+
+    };
+  });
 
   function returnHome() {
 
@@ -19,7 +45,7 @@ const PageNotFound: React.FC<WithStyles<typeof styles>> = (props) => {
   return (
     <div className={classes.mainGrid}>
       <span className={classes.Lcode}>4</span>
-      <img className={classes.image} src={notFoundLogo} />
+      <img alt="NotFound" className={classes.image} src={notFoundLogo} />
       <span className={classes.Rcode}>4</span>
       <h2 className={classes.header}>OOPS! PAGE NOT FOUND</h2>
       <p className={classes.message}>
@@ -30,4 +56,4 @@ const PageNotFound: React.FC<WithStyles<typeof styles>> = (props) => {
 
 };
 
-export default memo(withStyles(styles)(PageNotFound));
+export default connect(null, mapDispatchToProps)(memo(withStyles(styles)(PageNotFound)));

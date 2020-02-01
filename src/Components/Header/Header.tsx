@@ -11,7 +11,6 @@ import { connect } from "react-redux";
 import { ViewState } from "../../Store/Reducers/View/viewReducer";
 import dark from '../../assets/darkLogo.svg';
 import light from '../../assets/lightLogo.svg';
-import { RouterState } from "connected-react-router";
 import IconButton from "@material-ui/core/IconButton";
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { useHistory } from "react-router";
@@ -20,12 +19,10 @@ import Menu from './components/Menu';
 interface HeaderProps {
   view: ViewState;
   logged: boolean;
-  router: RouterState;
 }
 
 const mapStateToProps = (state: State) => {
   return {
-    router: state.router,
     view: state.view,
     logged: state.authorization.authorized
   };
@@ -36,13 +33,10 @@ const Header: React.FC<WithStyles<typeof styles> & HeaderProps> = (props) => {
   const [anchorElem, setAnchorElem] = useState<null | HTMLElement>(null),
     history = useHistory();
 
-  const { classes, view, logged, router } = props,
+  const { classes, view, logged } = props,
     logo = view.selectedTheme === 'darkTheme' ?
       dark :
-      light,
-    title = router.location.pathname === '/404' ?
-      'Not Found' :
-      'Login';
+      light;
 
   function returnHome() {
 
@@ -56,16 +50,20 @@ const Header: React.FC<WithStyles<typeof styles> & HeaderProps> = (props) => {
 
   }
 
+  function renderLogo() {
+    return <div className={classes.logo} onClick={returnHome}>
+      <img src={logo} className={classes.logoIcon} alt="LogoIcon" />
+      <Typography className={classes.title} variant="h6" noWrap>
+        Provider
+        </Typography>
+    </div>
+  }
+
   function loggedView() {
 
     return (
       <Fragment>
-        <div className={classes.logo} onClick={returnHome}>
-          <img src={logo} className={classes.logoIcon} alt="Logo Image" />
-          <Typography className={classes.title} variant="h6" noWrap>
-            Provider
-        </Typography>
-        </div>
+        {renderLogo()}
         <div className={classes.search}>
           <div className={classes.searchIcon}>
             <SearchIcon />
@@ -104,11 +102,8 @@ const Header: React.FC<WithStyles<typeof styles> & HeaderProps> = (props) => {
 
     return (
       <Fragment>
-        <img src={logo} className={classes.logoIcon} alt="Logo Image" />
-        <Typography className={classes.title} variant="h6" noWrap>
-          Provider
-        </Typography>
-        <Typography variant="h4" className={classes.mainTitle}>{title}</Typography>
+        {renderLogo()}
+        <Typography variant="h4" className={classes.mainTitle}>{view.headerTitle}</Typography>
       </Fragment>
     );
 
