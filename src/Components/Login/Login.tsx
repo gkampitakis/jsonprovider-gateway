@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { WithStyles, withStyles } from "@material-ui/core/styles";
 import styles from './Login.styles';
 import { connect } from "react-redux";
@@ -16,11 +16,10 @@ import FacebookBtn from './components/socialButtons/FacebookBtn/FacebookBtn';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import InputAdornment from "@material-ui/core/InputAdornment";
-import autoBind from 'auto-bind';
 import { loginRequest } from "../../Store/Actions/Authorization/authAction";
 import isEmpty from 'lodash/isEmpty';
 import Link from "../Utils/Link/Link";
-import Modal from '../Utils/Modal/Modal'; //TODO: remove testing
+import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 
 const mapStateToProps = (state: State) => {
   return {
@@ -34,224 +33,200 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 }
 
-//TODO: this might need refactor
-//TODO: check what is updated with dev tools
-//TODO: maybe it needs to be broken to more components
-
-class Login extends Component<WithStyles<typeof styles> & LoginProps>{
-
-  constructor(props: any) {
-    super(props);
-
-    autoBind(this);
-  }
-
-  state: LoginState = {
-    form: {
-      email: {
-        value: '',
-        valid: true,
-        errorMessage: ''
-      },
-      password: {
-        value: '',
-        valid: true,
-        visible: false,
-        errorMessage: ''
-      }
-    }
-  };
-
-  private login(e: any): void {
-
-    const { form } = this.state;
-
-    if (isEmpty(form.email.value)) {
-
-      this.emailValidityState(false);
-
-      setTimeout(() => this.emailValidityState(true), 2000);
-
-    }
-
-    if (isEmpty(form.password.value)) {
-
-      this.passwordValidityState(false);
-
-      setTimeout(() => this.passwordValidityState(true), 2000);
-
-      return;
-    }
-
-    if (!validator.isEmail(form.email.value)) {
-
-      this.emailValidityState(false, "Please provide correct email");
-
-      setTimeout(() => this.emailValidityState(true), 2000);
-
-      return;
-
-    }
-
-    this.props.loginAttempt(form.email.value, form.password.value);
-
-  }
-
-  private emailValidityState(status: boolean, message = "") {
-
-    const { form } = this.state;
-
-    form.email.valid = status;
-    form.email.errorMessage = message;
-    this.setState({ form: form });
-
-  }
-
-  private passwordValidityState(status: boolean) {
-
-    const { form } = this.state;
-
-    form.password.valid = status;
-    this.setState({ form: form });
-
-  }
-
-  private emailOnChange(e: any): void {
-
-    const { form } = this.state;
-
-    form.email.value = e.target.value;
-    this.setState({ form: form });
-
-  }
-
-  private passwordOnChange(e: any) {
-
-    const { form } = this.state;
-
-    form.password.value = e.target.value;
-    this.setState({ form: form });
-
-  }
-
-  private toggleVisibility() {
-
-    if (this.props.loading) return;
-
-    const { form } = this.state;
-    form.password.visible = !form.password.visible;
-    this.setState({ form: form });
-
-  }
-
-  private renderVisibilityIcon(classes: any) {
-
-    return this.state.form.password.visible ?
-      <VisibilityIcon className={classes.visibilityIcon} onClick={this.toggleVisibility} />
-      : <VisibilityOffIcon className={classes.visibilityIcon} onClick={this.toggleVisibility} />
-
-  }
-
-  private submitWithEnter(e: any) {
-
-    if (e.key === 'Enter') this.login(e);
-
-  }
-
-  render() {
-    const { classes, loading } = this.props;
-    const { form } = this.state;
-
-    return <Grid container className={classes.mainGrid}>
-      <Grid item xs={"auto"} style={{ marginBottom: '10%' }}>
-        <Card className={classes.card} >
-          <form style={{ padding: '0 5px' }}>
-            <TextField
-              className={classes.formField}
-              required
-              id="email"
-              label="Email"
-              variant="outlined"
-              type="email"
-              onKeyDown={this.submitWithEnter}
-              value={form.email.value}
-              disabled={loading}
-              onChange={this.emailOnChange}
-              error={!form.email.valid}
-              helperText={form.email.errorMessage}
-            />
-            <TextField
-              className={classes.formField}
-              required
-              id="password"
-              label="Password"
-              type={form.password.visible ? 'text' : 'password'}
-              autoComplete="current-password"
-              variant="outlined"
-              disabled={loading}
-              value={form.password.value}
-              onChange={this.passwordOnChange}
-              onKeyDown={this.submitWithEnter}
-              error={!form.password.valid}
-              InputProps={{
-                endAdornment:
-                  <InputAdornment position="end">
-                    {this.renderVisibilityIcon(classes)}
-                  </InputAdornment>
-              }}
-            />
-            <Button
-              disabled={loading}
-              className={classes.loginBtn}
-              onClick={this.login}
-              variant="contained">
-              Login
-            </Button>
-          </form>
-          <Grid item className={classes.linkSession}>
-            <Link disabled={loading}>New here? Register</Link>
-            <Link disabled={loading}>Forgot Password</Link>
-          </Grid>
-          <span className={classes.ORDivider}>OR</span>
-          <Divider className={classes.divider} />
-          <span>Login with:</span>
-          <div className={classes.mediaBtns}>
-            <GoogleBtn disabled={loading} />
-            <FacebookBtn disabled={loading} />
-            <GithubBtn disabled={loading} />
-          </div>
-          <LinearProgress style={loading ? {} : { visibility: "hidden" }} className={classes.progressBar} color="secondary" />
-        </Card>
-        <Modal
-          title={"My Modal"}
-          open={true}
-        >
-          <p>Hello World</p>
-        </Modal>
-      </Grid>
-    </Grid >
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Login));
-
-interface LoginState {
-  form: {
-    email: {
-      value: string;
-      valid: boolean;
-      errorMessage: string;
-    },
-    password: {
-      value: string;
-      visible: boolean;
-      valid: boolean;
-      errorMessage: string;
-    }
-  }
-}
-
 interface LoginProps {
   loading: boolean;
   loginAttempt: (email: string, password: string) => void;
 }
+
+//TODO: this might need refactor
+//TODO: check what is updated with dev tools
+//TODO: maybe it needs to be broken to more components
+//TODO: break the form of email verification to a hook and reuse it here and to the request password page
+
+const Login: React.FC<WithStyles<typeof styles> & LoginProps> = (props) => {
+
+  const { classes, loading, loginAttempt } = props,
+    [emailForm, setEmailForm] = useState({
+      value: '',
+      valid: true,
+      errorMessage: ''
+    }),
+    [passwordForm, setPasswordForm] = useState({
+      value: '',
+      valid: true,
+      visible: false,
+      errorMessage: ''
+    }),
+    [forgotPasswordModal, setForgotPasswordModal] = useState(false);
+
+  function emailValidityState(status: boolean, message = '') {
+
+    setEmailForm({
+      ...emailForm,
+      valid: status,
+      errorMessage: message
+    });
+
+  }
+
+  function passwordValidityState(status: boolean) {
+
+    setPasswordForm({
+      ...passwordForm,
+      valid: status
+    });
+
+  }
+
+  function emailOnChange(e: any) {
+
+    setEmailForm({
+      ...emailForm,
+      value: e.target.value
+    });
+
+  }
+
+  function passwordOnChange(e: any) {
+
+    setPasswordForm({
+      ...passwordForm,
+      value: e.target.value
+    });
+
+  }
+
+  function toggleVisibility() {
+
+    if (props.loading) return;
+
+    setPasswordForm({
+      ...passwordForm,
+      visible: !passwordForm.visible
+    });
+
+  }
+
+  function renderVisibilityIcon(classes: any) {
+
+    return passwordForm.visible ?
+      <VisibilityIcon className={classes.visibilityIcon} onClick={toggleVisibility} />
+      : <VisibilityOffIcon className={classes.visibilityIcon} onClick={toggleVisibility} />
+
+  }
+
+  function submitWithEnter(e: any) {
+
+    if (e.key === 'Enter') login(e);
+
+  }
+
+  function toggleModal(value: boolean) {
+
+    setForgotPasswordModal(value);
+
+  }
+
+  function login(e: any) {
+
+    if (isEmpty(emailForm.value)) {
+
+      emailValidityState(false);
+      setTimeout(() => emailValidityState(true), 2000);
+
+    }
+
+    if (isEmpty(passwordForm.value)) {
+
+      passwordValidityState(false);
+
+      setTimeout(() => passwordValidityState(true), 2000);
+
+      return;
+
+    }
+
+    if (!validator.isEmail(emailForm.value)) {
+
+      emailValidityState(false, "Please provide correct email");
+
+      setTimeout(() => emailValidityState(true), 2000);
+
+      return;
+
+    }
+
+    props.loginAttempt(emailForm.value, passwordForm.value);
+
+  }
+
+  return <Grid container className={classes.mainGrid}>
+    <Grid item xs={"auto"} style={{ marginBottom: '10%' }}>
+      <Card className={classes.card} >
+        <form style={{ padding: '0 5px' }}>
+          <TextField
+            className={classes.formField}
+            required
+            id="email"
+            label="Email"
+            variant="outlined"
+            type="email"
+            onKeyDown={submitWithEnter}
+            value={emailForm.value}
+            disabled={loading}
+            onChange={emailOnChange}
+            error={!emailForm.valid}
+            helperText={emailForm.errorMessage}
+          />
+          <TextField
+            className={classes.formField}
+            required
+            id="password"
+            label="Password"
+            type={passwordForm.visible ? 'text' : 'password'}
+            autoComplete="current-password"
+            variant="outlined"
+            disabled={loading}
+            value={passwordForm.value}
+            onChange={passwordOnChange}
+            onKeyDown={submitWithEnter}
+            error={!passwordForm.valid}
+            InputProps={{
+              endAdornment:
+                <InputAdornment position="end">
+                  {renderVisibilityIcon(classes)}
+                </InputAdornment>
+            }}
+          />
+          <Button
+            disabled={loading}
+            className={classes.loginBtn}
+            onClick={login}
+            variant="contained">
+            Login
+            </Button>
+        </form>
+        <Grid item className={classes.linkSession}>
+          <Link disabled={loading}>New here? Register</Link>
+          <Link disabled={loading} onClick={() => toggleModal(true)}>Forgot Password</Link>
+        </Grid>
+        <span className={classes.ORDivider}>OR</span>
+        <Divider className={classes.divider} />
+        <span>Login with:</span>
+        <div className={classes.mediaBtns}>
+          <GoogleBtn disabled={loading} />
+          <FacebookBtn disabled={loading} />
+          <GithubBtn disabled={loading} />
+        </div>
+        <LinearProgress style={loading ? {} : { visibility: "hidden" }} className={classes.progressBar} color="secondary" />
+      </Card>
+      {forgotPasswordModal && <ForgotPassword
+        open={forgotPasswordModal}
+        handleClose={() => toggleModal(false)}
+      />}
+    </Grid>
+  </Grid >
+
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Login));
