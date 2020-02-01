@@ -7,11 +7,7 @@ import notFoundLogo from '../../assets/404.png';
 import Link from '@material-ui/core/Link';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-interface ErrorBoundaryProps {
-
-}
-
-class ErrorBoundary extends Component<ErrorBoundaryProps & WithStyles<typeof styles> & RouteComponentProps> {
+class ErrorBoundary extends Component<WithStyles<typeof styles> & RouteComponentProps> {
 
   public constructor(props: any) {
 
@@ -48,7 +44,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps & WithStyles<typeof sty
     return (
       <div className={classes.mainGrid}>
         <span className={classes.Lcode}>5</span>
-        <img className={classes.image} src={notFoundLogo} />
+        <img alt="ErrorIcon" className={classes.image} src={notFoundLogo} />
         <span className={classes.Rcode}>0</span>
         <h2 className={classes.header}>OOPS! AN ERROR OCCURRED</h2>
         <p className={classes.message}>

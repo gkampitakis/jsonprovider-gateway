@@ -15,9 +15,19 @@ export abstract class API {
 
   }
 
+
+  //TODO: add Token at header as well
   protected postRequest(url: string, body: {}): Promise<any> {
 
     return axios.post(url, body);
+
+  }
+
+  //TODO: add Token at header as well
+
+  protected putRequest(url: string, body: {}): Promise<any> {
+
+    return axios.put(url, body);
 
   }
 

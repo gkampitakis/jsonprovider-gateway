@@ -116,4 +116,4 @@ const ForgotPassword: React.FC<WithStyles<typeof styles> & ForgotPasswordProps> 
 
 };
 
-export default connect(() => ({}), mapDispatchToProps)(withStyles(styles)(ForgotPassword));
+export default connect(null, mapDispatchToProps)(withStyles(styles)(ForgotPassword));
