@@ -1,7 +1,7 @@
 import { handleActions, Action, combineActions } from 'redux-actions';
 import { enableDarkMode, enableLightMode, SET_HEADER_TITLE } from '../../Actions/View/viewAction';
 
-export interface ViewState { //TODO: this will be expanded
+export interface ViewState {
   selectedTheme: 'darkTheme' | 'lightTheme';
   headerTitle: string;
 }

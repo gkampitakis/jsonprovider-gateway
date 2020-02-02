@@ -1,9 +1,7 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import Configuration from '../configuration';
 
 //TODO: extend with authorization and token retrieval
-//TODO: ncu and check if you can update
-
 
 export abstract class API {
 
@@ -15,25 +13,47 @@ export abstract class API {
 
   }
 
+  private setConfig({ token }: { token?: string }): AxiosRequestConfig {
 
-  //TODO: add Token at header as well
-  protected postRequest(url: string, body: {}): Promise<any> {
+    return {
+      headers: { Authorization: `Bearer ${token}` }
+    };
+
+  }
+
+  protected postRequest(url: string, body: {}, token?: string): Promise<any> {
 
     return axios.post(url, body);
 
   }
 
-  //TODO: add Token at header as well
+  protected putRequest(url: string, body: {}, token?: string): Promise<any> {
 
-  protected putRequest(url: string, body: {}): Promise<any> {
+    return axios.put(url, body, this.setConfig({ token }));
 
-    return axios.put(url, body);
+  }
+
+  protected getRequest(url: string, token?: string): Promise<any> {
+
+    return axios.get(url, this.setConfig({ token }));
+
+  }
+
+  protected deleteRequest(url: string, token?: string): Promise<any> {
+
+    return axios.delete(url, this.setConfig({ token }));
 
   }
 
   protected getUserId() {
     //FIXME: not yet used
     return '123';
+
+  }
+
+  protected getToken() {
+
+    return localStorage.getItem('token');
 
   }
 

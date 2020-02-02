@@ -52,9 +52,29 @@ class AuthorizationApi extends API {
 
   }
 
-  public logoutUser() {
+  private tokenInvalidate(token: string | null) {
 
-    //TODO: add call here to remove the token from the database
+    if (!token) return;
+
+    return this.deleteRequest(this.apiEndpoint + 'auth?t=' + token)
+      .then((result: AxiosResponse) => {
+        return result.data;
+      });
+
+  }
+
+  public async logoutUser() {
+
+    try {
+
+      await this.tokenInvalidate(this.getToken());
+
+    } catch (error) {
+
+      console.log(error);//TODO:this needs different handling
+
+    }
+
     this.removeFromStorage('token');
     this.removeFromStorage('userId');
 

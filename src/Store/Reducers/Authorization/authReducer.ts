@@ -28,7 +28,6 @@ function loginSuccessReducer(state: AuthState, action: Action<LOGIN_SUCCESS>) {
 }
 
 function logoutReducer(state: AuthState, action: Action<LOGOUT>) {
-  //TODO: send request to remove the token
   Authorization.logoutUser();
   return { ...state, authorized: false, token: '', userId: '' };
 }
