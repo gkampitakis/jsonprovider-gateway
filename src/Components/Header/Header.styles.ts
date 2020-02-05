@@ -9,13 +9,14 @@ const styles = (theme: Theme) =>
       position: 'absolute',
       left: '120px',
       display: 'none',
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.up('md')]: {
         display: 'block'
       }
     },
     search: {
       position: 'relative',
       borderRadius: theme.shape.borderRadius,
+      border: '1px solid ' + theme.palette.primary.dark,
       backgroundColor: fade(theme.palette.common.white, 0.15),
       '&:hover': {
         backgroundColor: fade(theme.palette.common.white, 0.25)
@@ -47,12 +48,6 @@ const styles = (theme: Theme) =>
       width: '100%',
       [theme.breakpoints.up('md')]: {
         width: '100%'
-      }
-    },
-    sectionDesktop: {
-      display: 'none',
-      [theme.breakpoints.up('md')]: {
-        display: 'flex'
       }
     },
     mainTitle: {

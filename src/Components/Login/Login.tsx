@@ -20,6 +20,7 @@ import { loginRequest } from "../../Store/Actions/Authorization/authAction";
 import isEmpty from 'lodash/isEmpty';
 import Link from "../Utils/Link/Link";
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
+import Register from './components/Register/Register';
 
 const mapStateToProps = (state: State) => {
   return {
@@ -57,7 +58,8 @@ const Login: React.FC<WithStyles<typeof styles> & LoginProps> = (props) => {
       visible: false,
       errorMessage: ''
     }),
-    [forgotPasswordModal, setForgotPasswordModal] = useState(false);
+    [forgotPasswordModal, setForgotPasswordModal] = useState(false),
+    [registerModal, setRegisterModal] = useState(false);
 
   function emailValidityState(status: boolean, message = '') {
 
@@ -118,12 +120,6 @@ const Login: React.FC<WithStyles<typeof styles> & LoginProps> = (props) => {
   function submitWithEnter(e: any) {
 
     if (e.key === 'Enter') login(e);
-
-  }
-
-  function toggleModal(value: boolean) {
-
-    setForgotPasswordModal(value);
 
   }
 
@@ -207,8 +203,8 @@ const Login: React.FC<WithStyles<typeof styles> & LoginProps> = (props) => {
             </Button>
         </form>
         <Grid item className={classes.linkSession}>
-          <Link disabled={loading}>New here? Register</Link>
-          <Link disabled={loading} onClick={() => toggleModal(true)}>Forgot Password</Link>
+          <Link disabled={loading} onClick={() => setRegisterModal(true)}>New here? Register</Link>
+          <Link disabled={loading} onClick={() => setForgotPasswordModal(true)}>Forgot Password</Link>
         </Grid>
         <span className={classes.ORDivider}>OR</span>
         <Divider className={classes.divider} />
@@ -220,10 +216,14 @@ const Login: React.FC<WithStyles<typeof styles> & LoginProps> = (props) => {
         </div>
         <LinearProgress style={loading ? {} : { visibility: "hidden" }} className={classes.progressBar} color="secondary" />
       </Card>
-      {forgotPasswordModal && <ForgotPassword
+      <ForgotPassword
         open={forgotPasswordModal}
-        handleClose={() => toggleModal(false)}
-      />}
+        handleClose={() => setForgotPasswordModal(false)}
+      />
+      <Register
+        open={registerModal}
+        handleClose={() => setRegisterModal(false)}
+      />
     </Grid>
   </Grid >
 

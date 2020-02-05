@@ -14,12 +14,12 @@ export const lightTheme = createMuiTheme({
     MuiInputBase: {
       root: {
         '&.Header-inputRoot-6': {
-          border: '1px solid #D9D9D9'
+          border: '1px solid #858585'
         },
         '&.Mui-error': {
           color: 'red'
         },
-        borderColor: '#D9D9D9',
+        borderColor: '#858585',
         borderRadius: '4px'
       }
     },
@@ -30,22 +30,22 @@ export const lightTheme = createMuiTheme({
     },
     MuiFormLabel: {
       root: {
-        color: '#D9D9D9',
+        color: '#858585',
         "&$focused": {
-          color: "#D9D9D9"
+          color: "#858585"
         }
       }
     },
     MuiOutlinedInput: {
       root: {
         '&:hover .MuiOutlinedInput-notchedOutline': {
-          borderColor: '#D9D9D9'
+          borderColor: '#858585'
         },
         '&:focused .MuiOutlinedInput-notchedOutline': {
-          borderColor: '#D9D9D9'
+          borderColor: '#858585'
         },
         '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-          borderColor: '#D9D9D9'
+          borderColor: '#858585'
         },
         '&.Mui-error': {
           '&:hover .MuiOutlinedInput-notchedOutline': {
@@ -60,7 +60,7 @@ export const lightTheme = createMuiTheme({
         }
       },
       notchedOutline: {
-        borderColor: '#D9D9D9'
+        borderColor: '#858585'
       }
     }
   },

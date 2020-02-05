@@ -21,6 +21,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 
 }
 
+//TODO: break the passwords from here ??
+
 function parseUrl(url: string) {
 
   const params = url.substring(1).split('&'),

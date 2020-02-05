@@ -79,7 +79,7 @@ const Header: React.FC<WithStyles<typeof styles> & HeaderProps> = (props) => {
           />
         </div>
         <div className={classes.grow} />
-        <div className={classes.sectionDesktop}>
+        <div>
           <IconButton
             aria-label="account of current user"
             aria-controls="primary-search-account-menu"

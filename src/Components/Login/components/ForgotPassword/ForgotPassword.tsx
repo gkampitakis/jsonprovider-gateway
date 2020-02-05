@@ -87,6 +87,7 @@ const ForgotPassword: React.FC<WithStyles<typeof styles> & ForgotPasswordProps> 
       handleClose={handleClose}
       width={500}
       height={350}
+      loading={loading}
     >
       <form className={classes.submitForm} autoComplete="off">
         <TextField

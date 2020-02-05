@@ -8,11 +8,13 @@ import CloseIcon from '@material-ui/icons/Close';
 
 interface ModalProps {
   open: boolean;
+  loading: boolean;
   handleClose: () => void;
   title?: string;
   width?: number;
   height?: number;
   cssStyle?: {};
+  //TODO: implement touched logic here for forms
 }
 
 const _Modal: React.FC<WithStyles<typeof styles> & ModalProps> = (props) => {
@@ -25,27 +27,37 @@ const _Modal: React.FC<WithStyles<typeof styles> & ModalProps> = (props) => {
     width,
     height,
     title,
-    cssStyle
+    cssStyle,
+    loading = false,
   } = props;
+
+
+  function controlledClose() {
+
+    if (!loading) return handleClose()
+
+    return () => { };
+
+  }
 
   return (
     <Modal
       style={cssStyle}
       className={classes.modal}
       open={open}
-      onClose={handleClose}
+      onClose={controlledClose}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
         timeout: 500,
       }}
     >
-      <Slide direction="up" in={open}>
+      <Slide direction="up" in={open} mountOnEnter unmountOnExit>
         <div className={classes.paper} style={{ width, height }}>
           <div className={classes.header}>
-            <h2 className={classes.title}>{title}</h2>
+            {!!title && <h2 className={classes.title}>{title}</h2>}
             <CloseIcon
-              onClick={handleClose}
+              onClick={controlledClose}
               className={classes.closeIcon}
             />
           </div>
@@ -55,6 +67,10 @@ const _Modal: React.FC<WithStyles<typeof styles> & ModalProps> = (props) => {
     </Modal>
   );
 
+};
+
+_Modal.defaultProps = {
+  loading: false
 };
 
 export default withStyles(styles)(_Modal);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import Header from '../Header/Header';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -47,18 +47,20 @@ const Application: React.FC<ApplicationProps> = (props) => {
         maxSnack={3}
         dense
       >
-        <CssBaseline />
-        <Notifier />
-        <Header />
-        <Switch>
-          {!logged && <Route path="/login" exact component={Login} />}
-          {!logged && <Route path="/password/new" exact component={SetPassword} />}
-          <AuthRoute path="/dashboard" authorized={logged} exact component={Dashboard} />
-          <AuthRoute path="/" exact authorized={logged} component={Dashboard} />
-          <Route path="/404" exact component={PageNotFound} />
-          <Redirect from="*" exact to="/404" />
-        </Switch>
-        {pageNotFound || <CreateBtn authorized={logged} />}
+        <Fragment>
+          <CssBaseline />
+          <Notifier />
+          <Header />
+          <Switch>
+            {!logged && <Route path="/login" exact component={Login} />}
+            {!logged && <Route path="/password/new" exact component={SetPassword} />}
+            <AuthRoute path="/dashboard" authorized={logged} exact component={Dashboard} />
+            <AuthRoute path="/" exact authorized={logged} component={Dashboard} />
+            <Route path="/404" exact component={PageNotFound} />
+            <Redirect from="*" exact to="/404" />
+          </Switch>
+          {pageNotFound || <CreateBtn authorized={logged} />}
+        </Fragment>
       </SnackbarProvider>
     </ThemeProvider >
   );

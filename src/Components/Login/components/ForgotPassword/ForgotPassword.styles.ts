@@ -6,7 +6,8 @@ const styles = (theme: Theme) => createStyles({
   },
   submitForm: {
     width: '100%',
-    margin: 'auto'
+    margin: 'auto',
+    minHeight: '25%'
   }
 });
 

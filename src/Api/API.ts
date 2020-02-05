@@ -15,6 +15,8 @@ export abstract class API {
 
   private setConfig({ token }: { token?: string }): AxiosRequestConfig {
 
+    if (!token) return {};
+
     return {
       headers: { Authorization: `Bearer ${token}` }
     };
@@ -23,7 +25,7 @@ export abstract class API {
 
   protected postRequest(url: string, body: {}, token?: string): Promise<any> {
 
-    return axios.post(url, body);
+    return axios.post(url, body, this.setConfig({ token }));
 
   }
 
