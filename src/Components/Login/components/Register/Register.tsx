@@ -10,6 +10,7 @@ import isEmpty from 'lodash/isEmpty';
 import validator from 'validator';
 import { Dispatch } from 'redux';
 import TextField from "@material-ui/core/TextField";
+import { User } from "../../../../Api";
 
 //TODO: break the textfields from here to components
 
@@ -57,7 +58,7 @@ const Register: React.FC<WithStyles<typeof styles> & RegisterProps> = (props) =>
     [loading, setLoading] = useState(false);
 
 
-  function createUser() {
+  async function createUser() {
 
     if (isEmpty(verifyPasswordForm.value)) {
 
@@ -113,6 +114,29 @@ const Register: React.FC<WithStyles<typeof styles> & RegisterProps> = (props) =>
         valid: true
       }), 2000);
       return;
+
+    }
+
+    try {
+
+      setLoading(true);
+
+      await User.createUser({
+        email: emailForm.value,
+        username: usernameForm.value,
+        password: passwordForm.value
+      });
+
+      createNotification('A verification email was send', 'success');
+
+      handleClose();
+      //TODO:add requests for username already exists
+      //Check email is valid
+
+    } catch ({ response }) {
+
+      createNotification(response.data.message, 'error');
+      setLoading(false);
 
     }
 

@@ -34,6 +34,8 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 }
 
+let timer: NodeJS.Timeout;
+
 interface LoginProps {
   loading: boolean;
   loginAttempt: (email: string, password: string) => void;
@@ -63,38 +65,42 @@ const Login: React.FC<WithStyles<typeof styles> & LoginProps> = (props) => {
 
   function emailValidityState(status: boolean, message = '') {
 
-    setEmailForm({
-      ...emailForm,
+    setEmailForm((state) => ({
+      ...state,
       valid: status,
       errorMessage: message
-    });
+    }));
 
   }
 
   function passwordValidityState(status: boolean) {
 
-    setPasswordForm({
-      ...passwordForm,
+    setPasswordForm((state) => ({
+      ...state,
       valid: status
-    });
+    }));
 
   }
 
   function emailOnChange(e: any) {
 
-    setEmailForm({
-      ...emailForm,
+    e.persist();
+
+    setEmailForm((state) => ({
+      ...state,
       value: e.target.value
-    });
+    }));
 
   }
 
   function passwordOnChange(e: any) {
 
-    setPasswordForm({
-      ...passwordForm,
+    e.persist();
+
+    setPasswordForm((state) => ({
+      ...state,
       value: e.target.value
-    });
+    }));
 
   }
 
@@ -102,10 +108,10 @@ const Login: React.FC<WithStyles<typeof styles> & LoginProps> = (props) => {
 
     if (props.loading) return;
 
-    setPasswordForm({
-      ...passwordForm,
+    setPasswordForm((state) => ({
+      ...state,
       visible: !passwordForm.visible
-    });
+    }));
 
   }
 
@@ -123,12 +129,12 @@ const Login: React.FC<WithStyles<typeof styles> & LoginProps> = (props) => {
 
   }
 
-  function login(e: any) {
+  function login(e: any) {//TODO: refactor
 
     if (isEmpty(emailForm.value)) {
 
       emailValidityState(false);
-      setTimeout(() => emailValidityState(true), 2000);
+      timer = setTimeout(() => emailValidityState(true), 2000)
 
     }
 
@@ -146,7 +152,8 @@ const Login: React.FC<WithStyles<typeof styles> & LoginProps> = (props) => {
 
       emailValidityState(false, "Please provide correct email");
 
-      setTimeout(() => emailValidityState(true), 2000);
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => emailValidityState(true), 2000);
 
       return;
 

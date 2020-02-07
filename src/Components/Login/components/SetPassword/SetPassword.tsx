@@ -89,6 +89,8 @@ const SetPassword: React.FC<SetPasswordProps & RouteComponentProps & WithStyles<
 
   async function submit(e: any) {
 
+    if (!password || !verifyPassword) return;
+
     try {
 
       setLoading(true);
