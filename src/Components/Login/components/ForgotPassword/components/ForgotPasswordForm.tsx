@@ -2,10 +2,9 @@ import React, { useState, Fragment } from 'react';
 import styles from './ForgotPasswordForm.styles';
 import { withStyles, WithStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import LoadingButton from '../../../../Utils/LoadingButton/LoadingButton';
 import isEmpty from 'lodash/isEmpty';
 import isEmail from 'validator/lib/isEmail';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface ForgotPasswordFormProps {
   loading: boolean;
@@ -70,18 +69,14 @@ const ForgotPasswordForm: React.FC<WithStyles<typeof styles> & ForgotPasswordFor
           helperText={error}
         />
       </form>
-      <Button
+      <LoadingButton
         variant="contained"
         style={{ margin: 'auto', width: '40%' }}
         onClick={submitForm}
-        disabled={loading}
+        loading={loading}
       >
-        {/* TODO: break it into loading button component */}
-        {loading ?
-          <CircularProgress color="secondary" size={24} /> :
-          'Request'
-        }
-      </Button>
+        Request
+      </LoadingButton>
     </Fragment>
   );
 

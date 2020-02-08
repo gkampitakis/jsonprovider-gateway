@@ -4,12 +4,11 @@ import { Dispatch } from 'redux';
 import { setHeaderTitle } from '../../../../Store/Actions/View/viewAction';
 import { withRouter, RouteComponentProps, useHistory } from 'react-router-dom';
 import { withStyles, WithStyles, TextField } from '@material-ui/core';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { enqueueNotification, closeNotification } from "../../../../Store/Actions/Notifications/notificationsAction";
 import { NotificationFactory } from '../../../Utils/Notifier/NotificationFactory'
 import { Authorization } from '../../../../Api';
 import styles from './SetPassword.styles';
-import Button from '@material-ui/core/Button';
+import LoadingButton from '../../../Utils/LoadingButton/LoadingButton';
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
 
@@ -71,7 +70,7 @@ const SetPassword: React.FC<SetPasswordProps & RouteComponentProps & WithStyles<
 
     }
 
-  });
+  }, []);
 
   function submitWithEnter(e: any) {
 
@@ -134,16 +133,16 @@ const SetPassword: React.FC<SetPasswordProps & RouteComponentProps & WithStyles<
         onChange={(e) => setVerifyPassword(e.target.value)}
       />
 
-      <Button
+      <LoadingButton
         variant="contained"
         style={{ margin: 'auto', width: '100%' }}
         onClick={submit}
         disabled={isButtonDisabled()}
+        loading={loading}
+        loaderSize={15}
       >
-        {loading ?
-          <CircularProgress size={15} />
-          : 'Change Password'}
-      </Button>
+        Change Password
+      </LoadingButton>
     </form>
   </div>);
 

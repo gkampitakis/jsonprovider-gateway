@@ -3,9 +3,8 @@ import TextField from "@material-ui/core/TextField";
 import isEmpty from 'lodash/isEmpty';
 import isEmail from 'validator/lib/isEmail';
 import styles from './RegisterForm.styles';
-import Button from '@material-ui/core/Button';
+import LoadingButton from '../../../../Utils/LoadingButton/LoadingButton';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
 //TODO:add requests for username already exists
 //TODO: prompt message if data are inserted before closing
 
@@ -185,17 +184,14 @@ const RegisterForm: React.FC<WithStyles<typeof styles> & RegisterFormProps> = (p
       onKeyDown={submitWithEnter}
       className={classes.inputField}
     />
-    <Button
+    <LoadingButton
       className={classes.submitBtn}
       onClick={submitForm}
       variant="contained"
-      disabled={loading}
+      loading={loading}
     >
-      {loading ?
-        <CircularProgress color="secondary" size={24} /> :
-        'Create User'
-      }
-    </Button>
+      Create User
+    </LoadingButton>
   </form>);
 
 }
