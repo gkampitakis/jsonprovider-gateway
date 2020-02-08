@@ -20,14 +20,6 @@ const styles = (theme: Theme) => createStyles({
     maxWidth: '50%',
     margin: 'auto'
   },
-  formField: {
-    width: '90%',
-    margin: '15px 0 0 0',
-    minHeight: '76px'
-  },
-  loginBtn: {
-    width: '65%'
-  },
   ORDivider: {
     opacity: '0.7',
     color: theme.palette.text.primary,
@@ -44,11 +36,6 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     height: '20%',
     margin: 'auto'
-  },
-  visibilityIcon: {
-    cursor: 'pointer',
-    opacity: '0.7',
-    color: theme.palette.text.primary
   },
   progressBar: {
     height: '5px',
