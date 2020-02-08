@@ -27,7 +27,7 @@ const Register: React.FC<RegisterProps> = (props) => {
     handleClose,
     createNotification
   } = props,
-    [dirtyForm, setDirtyForm] = useState(undefined),
+    [dirtyForm, setDirtyForm] = useState(undefined),//BUG: not yet implemented
     [loading, setLoading] = useState(false);
 
 

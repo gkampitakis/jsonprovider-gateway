@@ -118,7 +118,7 @@ const RegisterForm: React.FC<WithStyles<typeof styles> & RegisterFormProps> = (p
 
   }
 
-  function fieldsEmpty(...fields: string[]) {
+  function fieldsEmpty(...fields: string[]) {//TODO: not implemented
 
     let allEmpty = true;
 
@@ -191,7 +191,10 @@ const RegisterForm: React.FC<WithStyles<typeof styles> & RegisterFormProps> = (p
       variant="contained"
       disabled={loading}
     >
-      {loading ? <CircularProgress color="secondary" size={24} /> : ' Create User'}
+      {loading ?
+        <CircularProgress color="secondary" size={24} /> :
+        'Create User'
+      }
     </Button>
   </form>);
 

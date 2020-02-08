@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import Modal from '../../../Utils/Modal/Modal';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import { WithStyles, withStyles } from '@material-ui/core/styles';
-import styles from './ForgotPassword.styles';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Authorization } from '../../../../Api';
 import { enqueueNotification, closeNotification } from "../../../../Store/Actions/Notifications/notificationsAction";
 import { NotificationFactory } from '../../../Utils/Notifier/NotificationFactory'
-import isEmpty from 'lodash/isEmpty';
-import validator from 'validator';
+import ForgotPasswordForm from './components/ForgotPasswordForm';
 
 interface ForgotPasswordProps {
   open: boolean;
@@ -25,41 +20,16 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   };
 }
 
-const ForgotPassword: React.FC<WithStyles<typeof styles> & ForgotPasswordProps> = (props) => {
+const ForgotPassword: React.FC<ForgotPasswordProps> = (props) => {
 
   const {
     open,
     handleClose,
-    classes,
     createNotification
   } = props,
-    [email, setEmail] = useState(''),
-    [error, setError] = useState(''),
     [loading, setLoading] = useState(false);
 
-  function submitWithEnter(e: any): void {
-
-    if (e.key === 'Enter') submit(e);
-
-  }
-
-  async function submit(e: any) {
-
-    if (isEmpty(email)) {
-
-      setError('Please provide email');
-      setTimeout(() => setError(''), 2000);
-      return;
-
-    }
-
-    if (!validator.isEmail(email)) {
-
-      setError('Invalid Email');
-      setTimeout(() => setError(''), 2000);
-      return;
-
-    }
+  async function submit(email: string) {
 
     setLoading(true);
 
@@ -89,32 +59,13 @@ const ForgotPassword: React.FC<WithStyles<typeof styles> & ForgotPasswordProps> 
       height={350}
       loading={loading}
     >
-      <form className={classes.submitForm} autoComplete="off">
-        <TextField
-          className={classes.input}
-          required
-          label="Email"
-          id="email"
-          variant="outlined"
-          type="email"
-          onKeyDown={submitWithEnter}
-          value={email}
-          disabled={loading}
-          onChange={(e) => setEmail(e.target.value)}
-          error={!!error}
-          helperText={error}
-        />
-      </form>
-      <Button
-        variant="contained"
-        style={{ margin: 'auto', width: '40%' }}
-        onClick={submit}
-      >
-        Request
-        </Button>
+      <ForgotPasswordForm
+        loading={loading}
+        formHandler={submit}
+      />
     </Modal>
   );
 
 };
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(ForgotPassword));
+export default connect(null, mapDispatchToProps)(ForgotPassword);

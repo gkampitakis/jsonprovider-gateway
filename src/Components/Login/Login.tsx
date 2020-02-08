@@ -224,7 +224,6 @@ const Login: React.FC<WithStyles<typeof styles> & LoginProps> = (props) => {
         </div>
         <LinearProgress style={loading ? {} : { visibility: "hidden" }} className={classes.progressBar} color="secondary" />
       </Card>
-      {/* BUG: with mounting */}
       <ForgotPassword
         open={forgotPasswordModal}
         handleClose={() => setForgotPasswordModal(false)}
