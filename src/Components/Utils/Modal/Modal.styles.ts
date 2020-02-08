@@ -27,6 +27,10 @@ const styles = (theme: Theme) =>
     },
     closeIcon: {
       cursor: 'pointer'
+    },
+    progressBar: {
+      height: '5px',
+      width: '100%'
     }
   });
 

@@ -14,7 +14,6 @@ interface ModalProps {
   width?: number;
   height?: number;
   cssStyle?: {};
-  //TODO: implement touched logic here for forms
 }
 
 const _Modal: React.FC<WithStyles<typeof styles> & ModalProps> = (props) => {
@@ -28,15 +27,14 @@ const _Modal: React.FC<WithStyles<typeof styles> & ModalProps> = (props) => {
     height,
     title,
     cssStyle,
-    loading = false,
+    loading
   } = props;
-
 
   function controlledClose() {
 
-    if (!loading) return handleClose()
+    if (loading) return () => { };
 
-    return () => { };
+    return handleClose();
 
   }
 

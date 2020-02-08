@@ -6,6 +6,9 @@ const styles = (theme: Theme) =>
       width: '40%',
       margin: '0 auto'
     },
+    inputField: {
+      minHeight: '75px'
+    },
     mainGrid: {
       display: 'flex',
       flexDirection: 'column',

@@ -140,8 +140,9 @@ const SetPassword: React.FC<SetPasswordProps & RouteComponentProps & WithStyles<
         onClick={submit}
         disabled={isButtonDisabled()}
       >
-        {loading && <CircularProgress size={15} />}
-        {!loading && 'Change Password'}
+        {loading ?
+          <CircularProgress size={15} />
+          : 'Change Password'}
       </Button>
     </form>
   </div>);

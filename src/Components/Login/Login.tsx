@@ -166,6 +166,7 @@ const Login: React.FC<WithStyles<typeof styles> & LoginProps> = (props) => {
   return <Grid container className={classes.mainGrid}>
     <Grid item xs={"auto"} style={{ marginBottom: '10%' }}>
       <Card className={classes.card} >
+        {/* TODO: this needs to be extracted from here */}
         <form style={{ padding: '0 5px' }}>
           <TextField
             className={classes.formField}
@@ -223,6 +224,7 @@ const Login: React.FC<WithStyles<typeof styles> & LoginProps> = (props) => {
         </div>
         <LinearProgress style={loading ? {} : { visibility: "hidden" }} className={classes.progressBar} color="secondary" />
       </Card>
+      {/* BUG: with mounting */}
       <ForgotPassword
         open={forgotPasswordModal}
         handleClose={() => setForgotPasswordModal(false)}
