@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 
 }
 
-function parseUrl(url: string) {
+function parseUrl(url: string) {//TODO: extract it from here
 
   const params = url.substring(1).split('&'),
     queries: any = {};
@@ -93,7 +93,7 @@ const SetPassword: React.FC<SetPasswordProps & RouteComponentProps & WithStyles<
       setLoading(true);
       await Authorization.resetPassword(password, queries.t);
 
-      history.push('/Login');
+      history.push('/login');
       createNotification('Your password was changed', 'success');
 
     } catch (error) {

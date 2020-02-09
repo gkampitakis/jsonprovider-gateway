@@ -17,6 +17,7 @@ import { iconVariant } from '../Utils/Notifier/Notification.styles';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import { RouterState } from 'connected-react-router';
 import SetPassword from '../Login/components/SetPassword/SetPassword';
+import VerifyEmail from '../VerifyEmail/VerifyEmail';
 
 const theme = {
   darkTheme,
@@ -54,6 +55,7 @@ const Application: React.FC<ApplicationProps> = (props) => {
           <Switch>
             {!logged && <Route path="/login" exact component={Login} />}
             {!logged && <Route path="/password/new" exact component={SetPassword} />}
+            {!logged && <Route path="/verify" exact component={VerifyEmail} />}
             <AuthRoute path="/dashboard" authorized={logged} exact component={Dashboard} />
             <AuthRoute path="/" exact authorized={logged} component={Dashboard} />
             <Route path="/404" exact component={PageNotFound} />

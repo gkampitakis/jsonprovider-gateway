@@ -78,7 +78,7 @@ const LoginForm: React.FC<WithStyles<typeof styles> & LoginFormProps> = (props) 
     if (isEmpty(emailForm.value)) {
 
       updateValidityState(setEmailForm, false);
-      setTimeout(() => updateValidityState(setEmailForm, true), 2000)
+      setTimeout(() => updateValidityState(setEmailForm, true), 2000);
 
     }
 

@@ -44,6 +44,18 @@ class UserApi extends API {
 
   }
 
+
+  public verifyEmail(token: string): Promise<any> {
+
+    return this.getRequest(`${this.apiEndpoint}user/verify?t=${token}`)
+      .then((result: AxiosResponse) => {
+
+        return result.data;
+
+      });
+      
+  }
+
 }
 
 export const User = new UserApi();

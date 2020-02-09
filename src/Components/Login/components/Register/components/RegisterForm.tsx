@@ -185,6 +185,14 @@ const RegisterForm: React.FC<WithStyles<typeof styles> & RegisterFormProps> = (p
 
   }
 
+  function isButtonDisabled() {
+
+    if (!passwordForm.value || !verifyPasswordForm.value) return true;
+
+    return passwordForm.value !== verifyPasswordForm.value;
+
+  }
+
   return (<form autoComplete="off" className={classes.mainGrid}>
     <TextField
       required
@@ -204,6 +212,7 @@ const RegisterForm: React.FC<WithStyles<typeof styles> & RegisterFormProps> = (p
       required
       label="Email"
       id="email"
+      type="email"
       onBlur={verifyEmail}
       variant="outlined"
       value={emailForm.value}
@@ -219,6 +228,7 @@ const RegisterForm: React.FC<WithStyles<typeof styles> & RegisterFormProps> = (p
       label="Password"
       id="password"
       variant="outlined"
+      type="password"
       value={passwordForm.value}
       disabled={loading}
       onChange={inputChange(setPasswordForm)}
@@ -231,6 +241,7 @@ const RegisterForm: React.FC<WithStyles<typeof styles> & RegisterFormProps> = (p
       required
       label="Verify Password"
       id="Vpassword"
+      type="password"
       variant="outlined"
       value={verifyPasswordForm.value}
       disabled={loading}
@@ -245,6 +256,7 @@ const RegisterForm: React.FC<WithStyles<typeof styles> & RegisterFormProps> = (p
       onClick={submitForm}
       variant="contained"
       loading={loading}
+      disabled={isButtonDisabled()}
     >
       Create User
     </LoadingButton>
