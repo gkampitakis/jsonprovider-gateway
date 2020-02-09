@@ -6,7 +6,7 @@ interface _MenuItemProps {
   onClick: () => void;
 }
 
-const _MenuItem: React.FC<_MenuItemProps> = forwardRef((props, ref) => {//TODO::check this
+const _MenuItem: React.FC<_MenuItemProps> = forwardRef((props, ref) => {
 
   const { children, ...rest } = props;
 

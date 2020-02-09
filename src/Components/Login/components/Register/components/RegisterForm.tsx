@@ -5,7 +5,7 @@ import isEmail from 'validator/lib/isEmail';
 import styles from './RegisterForm.styles';
 import LoadingButton from '../../../../Utils/LoadingButton/LoadingButton';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
-//TODO:add requests for username already exists
+import { User } from '../../../../../Api';
 //TODO: prompt message if data are inserted before closing
 
 interface RegisterFormProps {
@@ -37,13 +37,20 @@ const RegisterForm: React.FC<WithStyles<typeof styles> & RegisterFormProps> = (p
       errorMessage: '',
     });
 
-  function updateValidityState(handler: (arg: any) => void, status: boolean, message = '') {
+  function fieldError(handler: (arg: any) => void, message = '') {
 
     handler((state: any) => ({
       ...state,
-      valid: status,
+      valid: false,
       errorMessage: message
     }));
+
+    setTimeout(() =>
+      handler((state: any) => ({
+        ...state,
+        valid: true,
+        errorMessage: ''
+      })), 2000)
 
   }
 
@@ -51,29 +58,25 @@ const RegisterForm: React.FC<WithStyles<typeof styles> & RegisterFormProps> = (p
 
     if (isEmpty(verifyPasswordForm.value)) {
 
-      updateValidityState(setVerifyPasswordForm, false);
-      setTimeout(() => updateValidityState(setVerifyPasswordForm, true), 2000);
+      fieldError(setVerifyPasswordForm);
 
     }
 
     if (isEmpty(passwordForm.value)) {
 
-      updateValidityState(setPasswordForm, false);
-      setTimeout(() => updateValidityState(setPasswordForm, true), 2000);
+      fieldError(setPasswordForm);
 
     }
 
     if (isEmpty(usernameForm.value)) {
 
-      updateValidityState(setUsernameForm, false);
-      setTimeout(() => updateValidityState(setUsernameForm, true), 2000);
+      fieldError(setUsernameForm);
 
     }
 
     if (isEmpty(emailForm.value)) {
 
-      updateValidityState(setEmailForm, false);
-      setTimeout(() => updateValidityState(setEmailForm, true), 2000);
+      fieldError(setEmailForm);
 
       return;
 
@@ -81,8 +84,7 @@ const RegisterForm: React.FC<WithStyles<typeof styles> & RegisterFormProps> = (p
 
     if (!isEmail(emailForm.value)) {
 
-      updateValidityState(setEmailForm, false, "Please provide correct email");
-      setTimeout(() => updateValidityState(setEmailForm, true), 2000);
+      fieldError(setEmailForm, "Please provide correct email");
 
       return;
 
@@ -117,6 +119,58 @@ const RegisterForm: React.FC<WithStyles<typeof styles> & RegisterFormProps> = (p
 
   }
 
+  async function verifyEmail() {
+
+    if (!emailForm.value) return;
+
+    if (!isEmail(emailForm.value)) {
+
+      fieldError(setEmailForm, "Please provide correct email");
+
+      return;
+
+    }
+
+    try {
+
+      const result = await User.userExist(emailForm.value, 'email')
+
+      if (result.status === 200) {
+
+        fieldError(setEmailForm, "Email already registered");
+
+      }
+
+    } catch (error) {
+
+      console.error(error);
+
+    }
+
+  }
+
+  async function verifyUsername() {
+
+    if (!usernameForm.value) return;
+
+    try {
+
+      const result = await User.userExist(usernameForm.value, 'username')
+
+      if (result.status === 200) {
+
+        fieldError(setUsernameForm, "Username already used");
+
+      }
+
+    } catch (error) {
+
+      console.error(error);
+
+    }
+
+  }
+
   function fieldsEmpty(...fields: string[]) {//TODO: not implemented
 
     let allEmpty = true;
@@ -136,6 +190,7 @@ const RegisterForm: React.FC<WithStyles<typeof styles> & RegisterFormProps> = (p
       required
       label="Username"
       id="username"
+      onBlur={verifyUsername}
       variant="outlined"
       value={usernameForm.value}
       disabled={loading}
@@ -149,6 +204,7 @@ const RegisterForm: React.FC<WithStyles<typeof styles> & RegisterFormProps> = (p
       required
       label="Email"
       id="email"
+      onBlur={verifyEmail}
       variant="outlined"
       value={emailForm.value}
       disabled={loading}

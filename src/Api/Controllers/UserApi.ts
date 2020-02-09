@@ -30,11 +30,11 @@ class UserApi extends API {
   }
 
 
-  public userExist(username: string): Promise<any> {
+  public userExist(id: string, field: 'email' | 'username'): Promise<{ message: string; status: number }> {
 
-    return this.postRequest(this.apiEndpoint + 'user/exists',
+    return this.postRequest(`${this.apiEndpoint}user/exists/${field}`,
       {
-        username
+        id
       })
       .then((result: AxiosResponse) => {
 
