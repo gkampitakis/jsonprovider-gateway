@@ -1,4 +1,4 @@
-import { Authorization } from '../../../Api';
+import { Authorization, User } from '../../../Api';
 import { put, takeEvery, call } from 'redux-saga/effects';
 import { LOGIN_REQUEST, loginSuccess } from '../../Actions/Authorization/authAction';
 import { loading } from '../../Actions/Loading/loadingAction';
@@ -28,6 +28,20 @@ function* loginSaga(action: Action<LOGIN_REQUEST>, dispatch: Dispatch) {
 
   } catch ({ response }) {
 
+    if (response.data.message === 'Unverified Email') {
+
+      yield put(enqueueNotification(NotificationFactory.create(
+        response.data.message,
+        'error',
+        (key: string) => dispatch(closeNotification(key)),
+        'Resend',
+        (key: string) => resendEmail(email, dispatch, key)
+      )));
+
+      return;
+
+    }
+
     yield put(enqueueNotification(NotificationFactory.create(
       response.data.message,
       'error',
@@ -46,5 +60,31 @@ function* loginSaga(action: Action<LOGIN_REQUEST>, dispatch: Dispatch) {
 export function* loginAsyncSaga(dispatch: Dispatch) {
 
   yield takeEvery(LOGIN_REQUEST, (action: Action<LOGIN_REQUEST>) => loginSaga(action, dispatch));
+
+}
+
+async function resendEmail(email: string, dispatch: Dispatch, key: string) {
+
+  dispatch(closeNotification(key));
+
+  try {
+
+    await User.resendVerificationEmail(email);
+
+    dispatch(enqueueNotification(NotificationFactory.create(
+      'Email was send',
+      'success',
+      (key: string) => dispatch(closeNotification(key))
+    )));
+
+  } catch ({ response }) {
+
+    dispatch(enqueueNotification(NotificationFactory.create(
+      response.data.message,
+      'error',
+      (key: string) => dispatch(closeNotification(key))
+    )));
+
+  }
 
 }

@@ -53,7 +53,18 @@ class UserApi extends API {
         return result.data;
 
       });
-      
+
+  }
+
+  public resendVerificationEmail(email: string): Promise<any> {
+
+    return this.getRequest(`${this.apiEndpoint}user/resend/verify?e=${email}`)
+      .then((result: AxiosResponse) => {
+
+        return result.data;
+
+      });
+
   }
 
 }
